@@ -6,24 +6,44 @@
     margin: 40px 40px 0 40px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
+    align-content: end;
 }
+
 .appHeader__links {
     background-color: #1C1C21;
     margin: 0;
     padding: 0;
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: left;
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr 2fr;
     list-style-type: none;
-    font-family: 'Jet Brains Mono';
-}
-.appHeader__links svg {
-    margin-right: calc(var(--offset-base-size)  * 2);
-}
-.appHeader__logo {
-    justify-self: center;
-    justify-items: center;
 }
 
+.appHeader__links svg {
+    margin-right: calc(var(--offset-base-size) * 2);
+    margin-left: calc(var(--offset-base-size) * 5);
+    z-index: 0;
+}
+
+.appHeader__logo {
+    align-self: center;
+    justify-self: center;
+}
+
+.appHeader__link {
+    justify-self: start;
+    text-decoration: none;
+    color: #8585AD;
+    fill: #8585AD;
+}
+
+.appHeader__profile {
+    justify-self: end;
+}
+
+.appHeader__link:hover {
+    z-index: 1;
+    color: #F2F2F3;
+    fill: #F2F2F3;
+}
