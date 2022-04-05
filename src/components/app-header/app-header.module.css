@@ -8,13 +8,22 @@
     align-items: center;
     justify-content: center;
 }
-.links {
+.appHeader__links {
+    background-color: #1C1C21;
     margin: 0;
     padding: 0;
     width: 100%;
     display: flex;
+    align-items: center;
+    justify-content: left;
     list-style-type: none;
-
-    background-color: #fff;
-
+    font-family: 'Jet Brains Mono';
 }
+.appHeader__links svg {
+    margin-right: calc(var(--offset-base-size)  * 2);
+}
+.appHeader__logo {
+    justify-self: center;
+    justify-items: center;
+}
+
