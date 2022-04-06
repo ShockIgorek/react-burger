@@ -1,32 +1,31 @@
 import React from 'react';
+import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './app-header.module.css';
-import {
-    Logo,
-    BurgerIcon,
-    ListIcon,
-    ProfileIcon
-} from '@ya.praktikum/react-developer-burger-ui-components'
 const temporaryLink = '#'
 
-export default AppHeader;
 function AppHeader() {
-    return <header className={styles.appHeader}>
-        <nav className={styles.appHeader__links}>
-            <a className={`text text_type_main-default ${styles.appHeader__link}`} href={temporaryLink}>
-                <BurgerIcon />
-                Конструктор
-            </a>
-            <a className={`text text_type_main-default ${styles.appHeader__link}`} href={temporaryLink}>
-                <ListIcon />
-                Лента заказов
-            </a>
-            <a className={styles.appHeader__logo} href={temporaryLink}>
+    return (
+        <header className={`${styles.appHeader} text text_type_main-default pt-4 pb-4`}>
+            <nav className={styles.links_left}>
+                <a className={`pt-5 pr-5 pb-5 ${styles.link}`} href={temporaryLink}>
+                    <BurgerIcon /*type="primary"*/ />
+                    <span className={`ml-2`}>Конструктор</span>
+                </a>
+                <a className={`p-5 ml-2 ${styles.link}`} href={temporaryLink}>
+                    <ListIcon /*type="secondary"*/ />
+                    <span className={`ml-2`}>Лента заказов</span>
+                </a>
+            </nav>
+            <a className={styles.logo} href={temporaryLink}>
                 <Logo />
             </a>
-            <a className={`text text_type_main-default ${styles.appHeader__link} ${styles.appHeader__profile}`} href={temporaryLink}>
-                <ProfileIcon />
-                Личный кабинет
+            <a className={`p-5 ${styles.link} ${styles.account}`} href={temporaryLink}>
+                <ProfileIcon /*type="secondary"*/ />
+                <span className={`ml-2`}>Личный кабинет</span>
             </a>
-        </nav>
-    </header >
+        </header >
+    );
 }
+
+
+export default AppHeader;

@@ -1,49 +1,48 @@
 .appHeader {
-    margin: 0;
-    background-color: #1C1C21;
-    width: calc(100% - 80px);
-    height: 88px;
-    margin: 40px 40px 0 40px;
-    display: flex;
-    align-items: center;
-    justify-content: start;
-    align-content: end;
-}
-
-.appHeader__links {
-    background-color: #1C1C21;
-    margin: 0;
-    padding: 0;
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr 1fr 2fr 2fr;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: flex-start;
+    align-items: center;
+    position: relative;
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+.links_left {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-self: flex-start;
     list-style-type: none;
 }
 
-.appHeader__links svg {
-    margin-right: calc(var(--offset-base-size) * 2);
-    margin-left: calc(var(--offset-base-size) * 5);
-    z-index: 0;
+.link {
+    display: flex;
+    align-items: center;
+    color: rgba(133, 133, 173, 1);
+    fill: rgba(133, 133, 173, 1);
+    font-size: 16px;
+    line-height: 24px;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
 }
-
-.appHeader__logo {
-    align-self: center;
+/* исправить */
+svg:hover {
+    fill: rgba(242, 242, 243, 1);
+}
+.link:hover {
+    fill: rgba(242, 242, 243, 1);
+    color: rgba(242, 242, 243, 1);
+}
+.logo {
     justify-self: center;
 }
 
-.appHeader__link {
-    justify-self: start;
-    text-decoration: none;
-    color: #8585AD;
-    fill: #8585AD;
-}
 
-.appHeader__profile {
-    justify-self: end;
-}
 
-.appHeader__link:hover {
-    z-index: 1;
-    color: #F2F2F3;
-    fill: #F2F2F3;
+.account {
+    justify-self: flex-end;
 }

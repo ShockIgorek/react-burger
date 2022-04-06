@@ -6,7 +6,7 @@ import AppHeader from '../app-header/app-header';
 
 
 function App() {
-  document.body.classList.add(pageStyle.App)
+  document.body.classList.add(pageStyle.App);
   return (
     <>
       <AppHeader />
