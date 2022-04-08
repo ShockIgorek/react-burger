@@ -35,7 +35,7 @@ function App() {
           <BurgerIngredients data={state.items}/>
         </section>
         <section>
-          {/* <BurgerConstructor data={state.items}/> */}
+          <BurgerConstructor data={state.items}/>
         </section>
 
       </main>
