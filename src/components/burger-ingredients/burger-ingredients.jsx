@@ -1,9 +1,8 @@
 import React from 'react';
-import { data } from '../../utils/data';
 import style from './burger-ingredients.module.css';
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export default function BurgerIngredients() {
+export default function BurgerIngredients(props) {
     const [current, setCurrent] = React.useState('bun');
     const itemTemplate = ({ image, price, name, _id }) => {
         return (
@@ -36,15 +35,15 @@ export default function BurgerIngredients() {
             <div className={`${style.ingredients_window} mt-10 ingredients-container`}>
                 <p className="mb-6 text text_type_main-medium">Булки</p>
                 <ul className={`${style.list} pt-6 pb-10 pr-4 pl-4`}>
-                    {data.map((item) => item.type === 'bun' && itemTemplate(item))}
+                    {props.data.map((item) => item.type === 'bun' && itemTemplate(item))}
                 </ul>
                 <p className="mb-6 text text_type_main-medium">Соусы</p>
                 <div className={`${style.list} pt-6 pb-10 pr-4 pl-4`}>
-                    {data.map((item) => item.type === 'sauce' && itemTemplate(item))}
+                    {props.data.map((item) => item.type === 'sauce' && itemTemplate(item))}
                 </div>
                 <p className="mb-6 text text_type_main-medium">Начинки</p>
                 <div className={`${style.list} pt-6 pb-10 pr-4 pl-4`}>
-                    {data.map((item) => item.type === 'main' && itemTemplate(item))}
+                    {props.data.map((item) => item.type === 'main' && itemTemplate(item))}
                 </div>
             </div>
         </div>

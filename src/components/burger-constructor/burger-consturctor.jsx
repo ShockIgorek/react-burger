@@ -1,10 +1,10 @@
 import React from 'react';
-import { data } from '../../utils/data';
+// import { data } from '../../utils/data';
 import style from './burger-constructor.module.css';
 import { DragIcon, ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export default function BurgerConstructor() {
-    const total = data.reduce((acc, cur) => acc + cur.price, 0)
+export default function BurgerConstructor(props) {
+    const total = props.data.reduce((acc, cur) => acc + cur.price, 0)
 
     return (
         <div className={`${style.constructor_container} pt-25`}>
@@ -12,13 +12,13 @@ export default function BurgerConstructor() {
                 <ConstructorElement
                     type="top"
                     isLocked={true}
-                    text={`${data[0].name} (верх)`}
-                    price={data[0].price}
-                    thumbnail={data[0].image}
+                    text={`${props.data[0].name} (верх)`}
+                    price={props.data[0].price}
+                    thumbnail={props.data[0].image}
                 />
             </div>
             <ul className={`${style.list} pl-4 pr-4`}>
-                {data.map((ingredient, idx) => idx > 0 && idx < data.length - 1 && (
+                {props.data.map((ingredient, idx) => idx > 0 && idx < props.data.length - 1 && (
                     <li key={idx} className={style.item}>
                         <DragIcon />
                         <ConstructorElement
@@ -34,9 +34,9 @@ export default function BurgerConstructor() {
                 <ConstructorElement
                     type="bottom"
                     isLocked={true}
-                    text={`${data[data.length - 1].name} (низ)`}
-                    price={data[data.length - 1].price}
-                    thumbnail={data[data.length - 1].image}
+                    text={`${props.data[props.data.length - 1].name} (низ)`}
+                    price={props.data[props.data.length - 1].price}
+                    thumbnail={props.data[props.data.length - 1].image}
                 />
             </div>
 
