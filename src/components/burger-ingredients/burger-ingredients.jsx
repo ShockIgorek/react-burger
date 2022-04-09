@@ -4,19 +4,22 @@ import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger
 
 export default function BurgerIngredients(props) {
     const [current, setCurrent] = React.useState('bun');
+    const open = () => {
+        console.log(1)
+    }
     const itemTemplate = ({ image, price, name, _id }) => {
         return (
-        <li key={_id} className={style.ingredient}>
-            <img src={image} alt={name} className={`${style.image} ml-4 mr-4`} />
-            <div className={`${style.price_info} mt-4 mb-4`}>
-            <span className="text text_type_digits-default mr-2">
-                {price}
-            </span>
-                <CurrencyIcon type="primary" />
-            </div>
-            <h3 className={`${style.text} text text_type_main-default`}>{name}</h3>
-            <Counter count={1} size="default" />
-        </li>)
+            <li key={_id}  onClick={open} className={style.ingredient}>
+                <img src={image} alt={name} className={`${style.image} ml-4 mr-4`} />
+                <div className={`${style.price_info} mt-4 mb-4`}>
+                    <span className="text text_type_digits-default mr-2">
+                        {price}
+                    </span>
+                    <CurrencyIcon type="primary" />
+                </div>
+                <h3 className={`${style.text} text text_type_main-default`}>{name}</h3>
+                <Counter count={1} size="default" />
+            </li>)
     }
     return (
         <div className={style.ingredients}>

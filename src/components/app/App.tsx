@@ -3,10 +3,15 @@ import pageStyle from './App.module.css';
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-consturctor'
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import Popup from '../popup/popup';
+import PopupOverlay from '../popup-overlay/popup-overlay';
+import Content from '../popup/content/content';
+
 
 
 
 function App() {
+  
   const url = 'https://norma.nomoreparties.space/api/ingredients';
   const [state, setState] = React.useState({
       error: null,
@@ -37,6 +42,9 @@ function App() {
         <section>
           <BurgerConstructor data={state.items}/>
         </section>
+        <PopupOverlay>
+          <Content data={state.items}/>
+        </PopupOverlay>
 
       </main>
     </>

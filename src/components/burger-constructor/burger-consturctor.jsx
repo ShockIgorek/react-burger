@@ -3,7 +3,6 @@ import style from './burger-constructor.module.css';
 import { DragIcon, ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export default function BurgerConstructor(props) {
-    const total = props.data.reduce((acc, cur) => acc + cur.price, 0)
     return (
         <div className={`${style.constructor_container} pt-25`}>
             {props.data.length > 0 && 
@@ -35,14 +34,14 @@ export default function BurgerConstructor(props) {
                 <ConstructorElement
                     type="bottom"
                     isLocked={true}
-                    text={`${props.data[props.data.length - 1].name} (низ)`}
-                    price={props.data[props.data.length - 1].price}
-                    thumbnail={props.data[props.data.length - 1].image}
+                    text={`${props.data[0].name} (низ)`}
+                    price={props.data[0].price}
+                    thumbnail={props.data[0].image}
                 />
             </div>}
             <div className={`${style.button_container} pt-6 pr-6`}>
                 <div className='mr-10'>
-                    <span className="text text_type_digits-medium mr-2">{total}</span>
+                    <span className="text text_type_digits-medium mr-2">610</span>
                     <CurrencyIcon type="primary" />
                 </div>
                 <Button className="pt-10" type="primary" size="medium">
