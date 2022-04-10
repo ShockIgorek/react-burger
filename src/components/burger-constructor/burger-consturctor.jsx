@@ -3,7 +3,7 @@ import { DragIcon, ConstructorElement, Button, CurrencyIcon } from '@ya.praktiku
 import { composeData } from '../../utils/data';
 import style from './burger-constructor.module.css';
 
-export default function BurgerConstructor({ ingredientsData }) {
+export default function BurgerConstructor({ ingredients }) {
 
 
     return (

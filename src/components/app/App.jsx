@@ -23,7 +23,7 @@ export default function App() {
   return (
     <div className={`${style.app} pb-10`}>
       <AppHeader />
-      <Main ingredientsData={ingredients} />
+      <Main ingredients={ingredients} />
     </div>
   );
 };

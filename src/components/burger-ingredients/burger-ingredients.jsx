@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './burger-ingredients.module.css';
 
-export default function BurgerIngredients({ ingredientsData: ingredients }) {
+export default function BurgerIngredients({ ingredients }) {
     const [current, setCurrent] = useState('bun')
 
     const itemTemplate = ({ image, price, name, _id }) => {
