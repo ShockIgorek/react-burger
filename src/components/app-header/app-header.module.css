@@ -1,12 +1,12 @@
-.appHeader {
+.header {
+  margin: 0 auto;
   width: 100%;
+  max-width: 1240px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  justify-items: flex-start;
+  justify-items: start;
   align-items: center;
   position: relative;
-  max-width: 1240px;
-  margin: 0 auto;
 }
 
 .links {
@@ -19,11 +19,6 @@
   gap: 8px;
   justify-self: flex-start;
 }
-
-.logo {
-  justify-self: center;
-}
-
 .link {
   display: flex;
   align-items: center;
@@ -34,15 +29,17 @@
   transition: all 0.2s ease;
 }
 
+.link:hover {
+  color: rgba(242, 242, 243, 1);
+  cursor: pointer;
+}
+.logo {
+  justify-self: center;
+}
+
 .profile {
   justify-self: flex-end;
 }
 
-.link:hover {
-  opacity: 0.8;
-}
 
-.link_active {
-  color: rgba(242, 242, 243, 1);
-}
 
