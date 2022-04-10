@@ -4,7 +4,7 @@ import { composeData } from '../../utils/data';
 import style from './burger-constructor.module.css';
 
 export default function BurgerConstructor({ ingredientsData }) {
-    const total = composeData.reduce((acc, cur) => acc + cur.price, 0)
+
 
     return (
         <div className={`${style.constructor_container} pt-25`}>
@@ -42,7 +42,7 @@ export default function BurgerConstructor({ ingredientsData }) {
 
             <div className={`${style.button_container} pt-6 pr-6`}>
                 <div className='mr-10'>
-                    <span className="text text_type_digits-medium mr-2">{total}</span>
+                    <span className="text text_type_digits-medium mr-2">610</span>
                     <CurrencyIcon type="primary" />
                 </div>
                 <Button className="pt-10" type="primary" size="medium">

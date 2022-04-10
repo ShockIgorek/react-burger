@@ -7,13 +7,14 @@ import getIngredients from '../../utils/Api';
 
 
 export default function App() {
-  const [ingredientsData, setIngredientsData] = useState([])
+  const [ingredients, setIngredients] = useState([])
 
   useEffect(() => {
     getIngredients()
-      .then(data => {
-        if (data) {
-          setIngredientsData(data.data)
+      .then(res => {
+        if (res) {
+          console.log(res.data)
+          setIngredients(res.data)
         }
       })
       .catch(err => { console.log(err) })
@@ -22,7 +23,7 @@ export default function App() {
   return (
     <div className={`${style.app} pb-10`}>
       <AppHeader />
-      <Main ingredientsData={ingredientsData} />
+      <Main ingredientsData={ingredients} />
     </div>
   );
 };
