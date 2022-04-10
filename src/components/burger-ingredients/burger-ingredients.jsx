@@ -1,28 +1,26 @@
 import React from 'react';
-import style from './burger-ingredients.module.css';
+import { useState } from 'react';
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
+import { data } from '../../utils/data';
+import style from './burger-ingredients.module.css';
 
-export default function BurgerIngredients(props) {
-    const [current, setCurrent] = React.useState('bun');
-    const open = () => {
-        console.log(1)
-    }
+export default function BurgerIngredients({ ingredientsData }) {
+    const [current, setCurrent] = useState('bun')
+
     const itemTemplate = ({ image, price, name, _id }) => {
-        return (
-            <li key={_id}  onClick={open} className={style.ingredient}>
-                <img src={image} alt={name} className={`${style.image} ml-4 mr-4`} />
-                <div className={`${style.price_info} mt-4 mb-4`}>
-                    <span className="text text_type_digits-default mr-2">
-                        {price}
-                    </span>
-                    <CurrencyIcon type="primary" />
-                </div>
-                <h3 className={`${style.text} text text_type_main-default`}>{name}</h3>
-                <Counter count={1} size="default" />
-            </li>)
+        return (<li key={_id} className={style.list_item}>
+            <img alt={name} src={image} className={`${style.image} ml-4 mr-4`} />
+            <div className={`${style.price_info} mt-4 mb-4`}>
+                <span className="text text_type_digits-default mr-2">{price}</span>
+                <CurrencyIcon type="primary" />
+            </div>
+            <h3 className={`${style.text} text text_type_main-default`}>{name}</h3>
+            <Counter count={1} size="default" />
+        </li>)
     }
+
     return (
-        <div className={style.ingredients}>
+        <div className={style.main_container}>
             <h1 className="mt-10 mb-5 text text_type_main-large">Соберите бургер</h1>
             <div className="" style={{ display: 'flex' }}>
                 <Tab value="bun" active={current === 'bun'} onClick={setCurrent}>
@@ -35,18 +33,18 @@ export default function BurgerIngredients(props) {
                     Начинки
                 </Tab>
             </div>
-            <div className={`${style.ingredients_window} mt-10 ingredients-container`}>
-                <p className="mb-6 text text_type_main-medium">Булки</p>
+            <div className={`${style.ingredients_container} mt-10 ingredients-container`}>
+                <h2 className="mb-6 text text_type_main-medium">Булки</h2>
                 <ul className={`${style.list} pt-6 pb-10 pr-4 pl-4`}>
-                    {props.data.map((item) => item.type === 'bun' && itemTemplate(item))}
+                    {data.map((item) => item.type === 'bun' && itemTemplate(item))}
                 </ul>
-                <p className="mb-6 text text_type_main-medium">Соусы</p>
+                <h2 className="mb-6 text text_type_main-medium">Соусы</h2>
                 <div className={`${style.list} pt-6 pb-10 pr-4 pl-4`}>
-                    {props.data.map((item) => item.type === 'sauce' && itemTemplate(item))}
+                    {data.map((item) => item.type === 'sauce' && itemTemplate(item))}
                 </div>
-                <p className="mb-6 text text_type_main-medium">Начинки</p>
+                <h2 className="mb-6 text text_type_main-medium">Начинки</h2>
                 <div className={`${style.list} pt-6 pb-10 pr-4 pl-4`}>
-                    {props.data.map((item) => item.type === 'main' && itemTemplate(item))}
+                    {data.map((item) => item.type === 'main' && itemTemplate(item))}
                 </div>
             </div>
         </div>

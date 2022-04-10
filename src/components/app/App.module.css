@@ -1,15 +1,5 @@
-.App {
-  background-color: #131316;
-  max-width: 1240px;
-  width: 100%;
-  margin: 0 auto;
-}
-.main {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  align-items: flex-start;
-  justify-items: space-between;
-  grid-gap: 40px;
+.app {
+  background-color:rgba(19, 19, 22, 1);
 }
 /* возможно так делать не стоит, но смотрится лучше */
 body::-webkit-scrollbar {

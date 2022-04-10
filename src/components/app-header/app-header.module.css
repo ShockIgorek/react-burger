@@ -1,45 +1,48 @@
 .appHeader {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    justify-items: flex-start;
-    align-items: center;
-    position: relative;
-    margin: 0 auto;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: flex-start;
+  align-items: center;
+  position: relative;
+  max-width: 1240px;
+  margin: 0 auto;
 }
 
-.links_left {
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    justify-self: flex-start;
-    list-style-type: none;
+.links {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  justify-self: flex-start;
+}
+
+.logo {
+  justify-self: center;
 }
 
 .link {
-    display: flex;
-    align-items: center;
-    color: rgba(133, 133, 173, 1);
-    fill: rgba(133, 133, 173, 1);
-    font-size: 16px;
-    line-height: 24px;
-    text-decoration: none;
-    transition: all 0.3s ease-in-out;
-}
-/* исправить */
-svg:hover {
-    fill: rgba(242, 242, 243, 1);
-}
-.link:hover {
-    fill: rgba(242, 242, 243, 1);
-    color: rgba(242, 242, 243, 1);
-}
-.logo {
-    justify-self: center;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  line-height: 24px;
+  color: rgba(133, 133, 173, 1);
+  text-decoration: none;
+  transition: all 0.2s ease;
 }
 
-.account {
-    justify-self: flex-end;
+.profile {
+  justify-self: flex-end;
 }
+
+.link:hover {
+  opacity: 0.8;
+}
+
+.link_active {
+  color: rgba(242, 242, 243, 1);
+}
+
