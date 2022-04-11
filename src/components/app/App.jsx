@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import style from './app.module.css';
+import style from './App.module.css';
 import AppHeader from '../app-header/app-header'
 import Main from '../main/main';
 import getIngredients from '../../utils/Api'
