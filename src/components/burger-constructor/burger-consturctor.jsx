@@ -44,9 +44,9 @@ export default function BurgerConstructor({ setOrderDetailsPopup, ingredients })
         <ConstructorElement
           type="bottom"
           isLocked={true}
-          text={`${burger[0] && burger[burger.length - 1].name} (низ)`}
-          price={burger[0] && burger[burger.length - 1].price}
-          thumbnail={burger[0] && burger[burger.length - 1].image}
+          text={`${burger[0] && burger[0].name} (низ)`}
+          price={burger[0] && burger[0].price}
+          thumbnail={burger[0] && burger[0].image}
         />
       </div>
 
