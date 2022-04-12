@@ -21,3 +21,7 @@ export default function OrderDetails({ number }) {
   );
 };
 
+OrderDetails.propTypes = {
+  orderData: PropTypes.number
+};
+

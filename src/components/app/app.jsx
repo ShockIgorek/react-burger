@@ -46,20 +46,16 @@ export default function App() {
             />
             {
               orderDetailsPopup && (
-                <ModalOverlay modalCloseHandler={setOrderDetailsPopup}>
                   <Modal modalCloseHandler={setOrderDetailsPopup}>
                     <OrderDetails number={'034536'} />
                   </Modal>
-                </ModalOverlay>
               )
             }
             {
               ingredientPopup && (
-                <ModalOverlay modalCloseHandler={setIngredientPopup}>
                   <Modal title='Детали ингредиентов' modalCloseHandler={setIngredientPopup}>
                     <IngredientCalories ingredients={selectedIngredient} />
                   </Modal>
-                </ModalOverlay>
               )
             }
           </>
