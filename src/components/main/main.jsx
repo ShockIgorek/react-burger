@@ -21,8 +21,8 @@ export default function Main({
 };
 
 Main.propTypes = {
-  ingredients: PropTypes.array,
-  setOrderDetailsPopup: PropTypes.func,
-  setIngredientPopup: PropTypes.func,
-  setSelectedIngredient: PropTypes.func,
+  ingredients: PropTypes.array.isRequired,
+  setOrderDetailsPopup: PropTypes.func.isRequired,
+  setIngredientPopup: PropTypes.func.isRequired,
+  setSelectedIngredient: PropTypes.func.isRequired,
 }; 

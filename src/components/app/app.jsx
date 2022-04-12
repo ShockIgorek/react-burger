@@ -54,7 +54,7 @@ export default function App() {
             {
               ingredientPopup && (
                   <Modal title='Детали ингредиентов' modalCloseHandler={setIngredientPopup}>
-                    <IngredientCalories ingredients={selectedIngredient} />
+                    <IngredientCalories ingredient={selectedIngredient} />
                   </Modal>
               )
             }

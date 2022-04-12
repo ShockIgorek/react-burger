@@ -14,5 +14,5 @@ export default function ModalOverlay({ modalCloseHandler }) {
 };
 
 ModalOverlay.propTypes = {
-  modalCloseHandler: PropTypes.func,
+  modalCloseHandler: PropTypes.func.isRequired,
 }; 
