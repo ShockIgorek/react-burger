@@ -1,15 +1,15 @@
 import React from 'react';
-import style from './popup.module.css';
+import style from './modal.module.css';
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export default function Popup({ children, popupCloseHandler, title = '' }) {
+export default function Modal({ children, modalCloseHandler, title = '' }) {
 
   useEffect(() => {
     const handleEscapeClose = (evt) => {
       if (evt.key === 'Escape') {
-        popupCloseHandler(false)
+        modalCloseHandler(false)
       };
     };
 
@@ -17,23 +17,23 @@ export default function Popup({ children, popupCloseHandler, title = '' }) {
     return () => {
       document.removeEventListener('keyup', handleEscapeClose);
     };
-  }, [popupCloseHandler])
+  }, [modalCloseHandler])
 
   return (
     <div className={`pt-15 pr-10 pl-10 pb-15 ${style.container}`}>
-      <header className={style.header}>
+      <div className={style.header}>
         {title && (<h2 className={`${style.title} text text_type_main-large`}>{title}</h2>)}
-        <button onClick={() => popupCloseHandler(false)} className={style.closeButton}>
+        <button onClick={() => modalCloseHandler(false)} className={style.closeButton}>
           <CloseIcon type="primary" />
         </button>
-      </header>
+      </div>
       {children}
     </div>
   );
 };
 
-Popup.propTypes = {
+Modal.propTypes = {
   children: PropTypes.element,
-  popupCloseHandler: PropTypes.func,
+  modalCloseHandler: PropTypes.func,
   title: PropTypes.string,
 }; 

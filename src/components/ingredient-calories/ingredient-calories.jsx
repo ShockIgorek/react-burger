@@ -38,5 +38,5 @@ export default function IngredientCalories({ ingredients }) {
 };
 
 IngredientCalories.propTypes = {
-    ingredients: PropTypes.array
+    ingredients: PropTypes.object
 }; 

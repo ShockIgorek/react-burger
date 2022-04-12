@@ -4,8 +4,8 @@ import style from './App.module.css';
 import AppHeader from '../app-header/app-header'
 import Main from '../main/main';
 import getIngredients from '../../utils/Api'
-import Popup from '../popup/popup';
-import PopupOverlay from '../popup-overlay/popup-overlay';
+import Modal from '../modal/modal';
+import ModalOverlay from '../modal-overlay/modal-overlay';
 import OrderDetails from '../order-details/order-details';
 import IngredientCalories from '../ingredient-calories/ingredient-calories';
 const url = 'https://norma.nomoreparties.space/api'
@@ -46,20 +46,20 @@ export default function App() {
             />
             {
               orderDetailsPopup && (
-                <PopupOverlay popupCloseHandler={setOrderDetailsPopup}>
-                  <Popup popupCloseHandler={setOrderDetailsPopup}>
+                <ModalOverlay modalCloseHandler={setOrderDetailsPopup}>
+                  <Modal modalCloseHandler={setOrderDetailsPopup}>
                     <OrderDetails number={'034536'} />
-                  </Popup>
-                </PopupOverlay>
+                  </Modal>
+                </ModalOverlay>
               )
             }
             {
               ingredientPopup && (
-                <PopupOverlay popupCloseHandler={setIngredientPopup}>
-                  <Popup title='Детали ингредиентов' popupCloseHandler={setIngredientPopup}>
+                <ModalOverlay modalCloseHandler={setIngredientPopup}>
+                  <Modal title='Детали ингредиентов' modalCloseHandler={setIngredientPopup}>
                     <IngredientCalories ingredients={selectedIngredient} />
-                  </Popup>
-                </PopupOverlay>
+                  </Modal>
+                </ModalOverlay>
               )
             }
           </>
