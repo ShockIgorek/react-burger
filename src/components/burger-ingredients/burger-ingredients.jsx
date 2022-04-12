@@ -33,7 +33,7 @@ export default function BurgerIngredients({ setIngredientPopup, setSelectedIngre
     return (
         <div className={style.constructor}>
             <h1 className="mt-10 mb-5 text text_type_main-large">Соберите бургер</h1>
-            <div className="" style={{ display: 'flex' }}>
+            <div className={style.header}>
                 <Tab value="bun" active={current === 'bun'} onClick={setCurrent}>
                     Булки
                 </Tab>
