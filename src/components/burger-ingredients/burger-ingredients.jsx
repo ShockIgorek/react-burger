@@ -1,10 +1,12 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import style from './burger-ingredients.module.css';
 import PropTypes from 'prop-types';
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Ingredients } from '../services/ingredients'
 
-export default function BurgerIngredients({ setIngredientPopup, setSelectedIngredient, ingredients }) {
+export default function BurgerIngredients({ setIngredientPopup, setSelectedIngredient }) {
+    const ingredients = useContext(Ingredients);
     const [current, setCurrent] = useState('bun')
 
     const onClick = (evt) => {

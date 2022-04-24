@@ -1,10 +1,13 @@
 import React from 'react';
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext} from 'react'
 import style from './burger-constructor.module.css';
 import PropTypes from 'prop-types';
 import { DragIcon, ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Ingredients } from '../services/ingredients'
 
-export default function BurgerConstructor({ setOrderDetailsPopup, ingredients }) {
+
+export default function BurgerConstructor({ setOrderDetailsPopup}) {
+  const ingredients = useContext(Ingredients)
   const [burger, setBurger] = useState([])
   const handleOrderButtonClick = () => {
     setOrderDetailsPopup(true)

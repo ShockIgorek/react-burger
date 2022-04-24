@@ -8,13 +8,13 @@ export default function Main({
   setOrderDetailsPopup,
   setIngredientPopup,
   setSelectedIngredient,
-  ingredients
+
 }) {
   return (
     <main className={style.main}>
       <section className={style.main_container}>
-        <BurgerIngredients setSelectedIngredient={setSelectedIngredient} setIngredientPopup={setIngredientPopup} ingredients={ingredients} />
-        <BurgerConstructor setOrderDetailsPopup={setOrderDetailsPopup} ingredients={ingredients}/>
+        <BurgerIngredients setSelectedIngredient={setSelectedIngredient} setIngredientPopup={setIngredientPopup} />
+        <BurgerConstructor setOrderDetailsPopup={setOrderDetailsPopup} />
       </section>
     </main>
   );
