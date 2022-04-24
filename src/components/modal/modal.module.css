@@ -1,0 +1,39 @@
+.container {
+    position: fixed;
+    z-index: 10;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 720px;
+    border-radius: 40px;
+    background-color: #1C1C21;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .title {
+    margin-right: auto;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .closeButton {
+    width: 24px;
+    height: 24px;
+    background-color: transparent;
+    transition: all 0.3s ease;
+    border: 0;
+  }
+  
+  .closeButton:hover {
+    cursor: pointer;
+    opacity: .8;
+  }
+  
