@@ -5,19 +5,45 @@ import PropTypes from 'prop-types';
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Ingredients } from '../services/ingredients'
 
-export default function BurgerIngredients({ setIngredientPopup, setSelectedIngredient }) {
-    const ingredients = useContext(Ingredients);
+export default function BurgerIngredients({ setIngredientPopup, setSelectedIngredient, targetIngredients, setTargetIngredients }) {
+    const startIngredients = useContext(Ingredients);
+    console.log(startIngredients)
     const [current, setCurrent] = useState('bun')
 
-    const onClick = (evt) => {
-        const id = evt.currentTarget.dataset.id
-        const foundIngredient = ingredients.find(ingredient => ingredient._id === id)
-        setSelectedIngredient(foundIngredient)
-        setIngredientPopup(true)
+    // const onClick = (evt) => {
+    //     const id = evt.currentTarget.dataset.id
+    //     const foundIngredient = ingredients.find(ingredient => ingredient._id === id)
+    //     setSelectedIngredient(foundIngredient)
+    //     setIngredientPopup(true)
+    // }
+    const detectCurrentTipeTitle = (type) => {
+        if (type === 'sauce') {
+            return 'Соусы'
+        } else if (type === 'main') {
+            return 'Начинки'
+        }
+        return 'Булки'
+    }
+
+    const handleIngredientDoubleClick = (event) => {
+        const targetIngredient = startIngredients.find(ingredient => ingredient._id === event.currentTarget.dataset.id)
+        const selectedBun = targetIngredients.find(ingredient => ingredient.type === 'bun')
+        const selectedBunIndex = targetIngredients.indexOf(selectedBun)
+
+        if (targetIngredient.type === 'bun' && selectedBun) {
+            const chosenIngredientsClone = targetIngredients;
+            chosenIngredientsClone.splice(selectedBunIndex, 1, targetIngredient);
+            setTargetIngredients([...chosenIngredientsClone])
+        } else {
+            setTargetIngredients([...targetIngredients, targetIngredient])
+        }
+
     }
 
     const itemTemplate = ({ image, price, name, _id }) => {
-        return (<li data-id={_id} key={_id} onClick={onClick} className={style.ingredient}>
+        let ingredientCounter = 0;
+        targetIngredients.forEach(ingredient => ingredient.name === name && (ingredient.type === 'bun' ? ingredientCounter += 2 : ingredientCounter += 1))
+        return (<li data-id={_id} key={_id} onClick={handleIngredientDoubleClick} className={style.ingredient}>
             <img alt={name} src={image} className={`${style.image} ml-4 mr-4`} />
             <div className={`${style.price_info} mt-4 mb-4`}>
                 <span className="text text_type_digits-default mr-2">
@@ -28,7 +54,7 @@ export default function BurgerIngredients({ setIngredientPopup, setSelectedIngre
             <h3 className={`${style.text} text text_type_main-default`}>
                 {name}
             </h3>
-            <Counter count={1} size="default" />
+            <Counter count={ingredientCounter} size="default" />
         </li>)
     }
 
@@ -39,7 +65,7 @@ export default function BurgerIngredients({ setIngredientPopup, setSelectedIngre
                 <Tab value="bun" active={current === 'bun'} onClick={setCurrent}>
                     Булки
                 </Tab>
-                <Tab value="sause" active={current === 'sause'} onClick={setCurrent}>
+                <Tab value="sauce" active={current === 'sauce'} onClick={setCurrent}>
                     Соусы
                 </Tab>
                 <Tab value="main" active={current === 'main'} onClick={setCurrent}>
@@ -47,17 +73,9 @@ export default function BurgerIngredients({ setIngredientPopup, setSelectedIngre
                 </Tab>
             </div>
             <div className={`${style.ingredients} mt-10 ingredients-container`}>
-                <h2 className="mb-6 text text_type_main-medium">Булки</h2>
+                <h2 className="mb-6 text text_type_main-medium">{detectCurrentTipeTitle(current)}</h2>
                 <ul className={`${style.list} pt-6 pb-10 pr-4 pl-4`}>
-                    {ingredients.map((item) => item.type === 'bun' && itemTemplate(item))}
-                </ul>
-                <h2 className="mb-6 text text_type_main-medium">Соусы</h2>
-                <ul className={`${style.list} pt-6 pb-10 pr-4 pl-4`}>
-                    {ingredients.map((item) => item.type === 'sauce' && itemTemplate(item))}
-                </ul>
-                <h2 className="mb-6 text text_type_main-medium">Начинки</h2>
-                <ul className={`${style.list} pt-6 pb-10 pr-4 pl-4`}>
-                    {ingredients.map((item) => item.type === 'main' && itemTemplate(item))}
+                    {startIngredients.map((ingredient) => ingredient.type === current && itemTemplate(ingredient))}
                 </ul>
             </div>
         </div>
@@ -65,7 +83,6 @@ export default function BurgerIngredients({ setIngredientPopup, setSelectedIngre
 };
 
 BurgerIngredients.propTypes = {
-    ingredients: PropTypes.array.isRequired,
     setIngredientPopup: PropTypes.func.isRequired,
     setSelectedIngredient: PropTypes.func.isRequired,
 }; 
