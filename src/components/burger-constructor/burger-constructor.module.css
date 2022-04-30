@@ -29,18 +29,11 @@
 что элементы, с которыми пользователь может взаимодействовать,
 должны быть обозначенны при наведении */
 .item:hover {
-  /* cursor: pointer; */
+  cursor: pointer;
   background-color: #4c4cff16;
   box-shadow: 0 0 10px  #4c4cffbf;
 }
-svg {
-  transition: all 0.3s
-}
 
-.item svg:hover {
-  cursor: pointer;
-  opacity: 0.7;
-}
 .button_container {
   display: flex;
   align-items: center;
