@@ -1,20 +1,23 @@
 import React from 'react';
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext, useMemo } from 'react'
 import style from './burger-constructor.module.css';
 import PropTypes from 'prop-types';
 import { DragIcon, ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+// import { Ingredients } from '../services/ingredients'
 
-export default function BurgerConstructor({ setOrderDetailsPopup, ingredients }) {
-  const [burger, setBurger] = useState([])
+
+export default function BurgerConstructor({ setOrderDetailsPopup, targetIngredients }) {
+  // const ingredients = useContext(Ingredients)
   const handleOrderButtonClick = () => {
     setOrderDetailsPopup(true)
   }
-
-  useEffect(() => {
-    ingredients.forEach(ingredient => {
-      setBurger((prev) => [...prev, ingredient])
-    })
-  }, [ingredients])
+  // console.log(targetIngredients)
+  const totalCost = useMemo(
+    () => targetIngredients.reduce((acc, cur) =>
+      cur.type === 'bun' ? acc + (cur.price * 2) : acc + cur.price, 0))
+  const bunCheck = (targetIngredients, property, trueValue, falseValue) =>
+    targetIngredients.find(ingredient => ingredient.type === 'bun') ? `${(targetIngredients.find(ingredient => ingredient.type === 'bun'))[property]
+      } ${trueValue}` : falseValue
 
   return (
     <div className={`${style.constructor_container} pt-25`}>
@@ -22,14 +25,14 @@ export default function BurgerConstructor({ setOrderDetailsPopup, ingredients })
         <ConstructorElement
           type="top"
           isLocked={true}
-          thumbnail={burger[0] && burger[0].image}
-          text={`${burger[0] && burger[0].name} (верх)`}
-          price={burger[0] && burger[0].price}
+          thumbnail={bunCheck(targetIngredients, 'image', '', '')}
+          text={bunCheck(targetIngredients, 'name', '(верх)', 'Выберите булку')}
+          price={bunCheck(targetIngredients, 'price', '', '0')}
         />
       </div>
       <ul className={`${style.list} pl-4 pr-4`}>
-        {burger.map((ingredient, idx) => idx > 0 && idx < burger.length - 1 && (
-          <li key={`${ingredient._id}${idx}`} className={style.item}>
+      {targetIngredients.map((ingredient, idx) =>
+          ingredient.type !== 'bun' && <li key={`${ingredient._id}${idx}`} className={style.item}>
             <DragIcon />
             <ConstructorElement
               thumbnail={ingredient.image}
@@ -38,21 +41,21 @@ export default function BurgerConstructor({ setOrderDetailsPopup, ingredients })
             />
           </li>
         )
-        )}
+        }
       </ul>
       <div className="pr-6">
         <ConstructorElement
           type="bottom"
           isLocked={true}
-          text={`${burger[0] && burger[0].name} (низ)`}
-          price={burger[0] && burger[0].price}
-          thumbnail={burger[0] && burger[0].image}
+          text={bunCheck(targetIngredients, 'name', '(низ)', 'Выберите булку')}
+          price={bunCheck(targetIngredients, 'price', '', '0')}
+          thumbnail={bunCheck(targetIngredients, 'image', '', '')}
         />
       </div>
 
       <div className={`${style.button_container} pt-6 pr-6`}>
         <div className='mr-10'>
-          <span className="text text_type_digits-medium mr-2">610</span>
+          <span className="text text_type_digits-medium mr-2">{totalCost}</span>
           <CurrencyIcon type="primary" />
         </div>
         <Button onClick={handleOrderButtonClick} className="pt-10" type="primary" size="medium">
@@ -64,6 +67,5 @@ export default function BurgerConstructor({ setOrderDetailsPopup, ingredients })
 };
 
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.array.isRequired,
   setOrderDetailsPopup: PropTypes.func,
 };
