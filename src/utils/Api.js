@@ -1,3 +1,5 @@
+const BASE_URL = 'https://norma.nomoreparties.space/api'
+//проверка ответа сервера
 function checkResult(res) {
   if (res.ok) {
     return res.json();
@@ -8,21 +10,19 @@ function checkResult(res) {
   }
 }
 
-function sendIngredients (url, ids) {
-  const data = {
-    'ingredients': ids
+export function getIngredients() {
+  return fetch(`${BASE_URL}/ingredients`).then((res) => checkResult(res));
+}
+
+export function sendIngredients(ingredientsIds) {
+  const burgerData = {
+    'ingredients': ingredientsIds
   }
-  return fetch(`${url}/orders`, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json;charset=utf-8'
-  },
-  body: JSON.stringify(data)}).then((res) => checkResult(res)) 
+  return fetch(`${BASE_URL}/orders`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    },
+    body: JSON.stringify(burgerData)
+  }).then((res) => checkResult(res));
 }
-
-
-function getIngredients(url) {
-  return fetch(`${url}/ingredients`).then((res) => checkResult(res));
-}
-
-export default(getIngredients ,sendIngredients)

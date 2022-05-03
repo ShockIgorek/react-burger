@@ -1,61 +1,78 @@
 import React from 'react';
-import { useState, useEffect, useContext, useMemo } from 'react'
+import { useContext, useMemo } from 'react';
 import style from './burger-constructor.module.css';
 import PropTypes from 'prop-types';
 import { DragIcon, ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-// import { Ingredients } from '../services/ingredients'
+import  {sendIngredients} from '../../utils/Api'
+import { ChosenIngredientsContext } from '../../services/chosenIngredientsContext';
 
-
-export default function BurgerConstructor({ setOrderDetailsPopup, targetIngredients }) {
-  // const ingredients = useContext(Ingredients)
+export default function BurgerConstructor({ setOrderDetailsPopup, setOrderData, setChosenIngredients }) {
+  const ingredients = useContext(ChosenIngredientsContext);
+  const orderPrice = useMemo(
+    () => ingredients.reduce((acc, cur) => cur.type === 'bun' ? acc + (cur.price * 2) : acc + cur.price, 0),[ingredients]);
   const handleOrderButtonClick = () => {
-    setOrderDetailsPopup(true)
+    const ingredientsIds = ingredients.map(ingredient => ingredient._id)
+      sendIngredients(ingredientsIds)
+      .then(data => {
+        setOrderData(data)
+        setOrderDetailsPopup(true)
+      })
+      .catch(err => { console.log(err) })
+      .finally(() => { })
   }
-  // console.log(targetIngredients)
-  const totalCost = useMemo(
-    () => targetIngredients.reduce((acc, cur) =>
-      cur.type === 'bun' ? acc + (cur.price * 2) : acc + cur.price, 0))
-  const bunCheck = (targetIngredients, property, trueValue, falseValue) =>
-    targetIngredients.find(ingredient => ingredient.type === 'bun') ? `${(targetIngredients.find(ingredient => ingredient.type === 'bun'))[property]
-      } ${trueValue}` : falseValue
-
+  //удаление
+  const handleDeleteIngredient = (item) => () => {
+    const selectedIngredientIndex = ingredients.indexOf(item)
+    const chosenIngredientsClone = ingredients.slice();
+    chosenIngredientsClone.splice(selectedIngredientIndex, 1);
+    setChosenIngredients([...chosenIngredientsClone])
+  }
+  const bunElementHandler = (chosenIngredients, property, trueValue, falseValue) => 
+  chosenIngredients.find(ingredient => ingredient.type === 'bun') ? 
+  `${(chosenIngredients.find(ingredient => ingredient.type === 'bun'))[property]} ${trueValue}` : falseValue
   return (
     <div className={`${style.constructor_container} pt-25`}>
       <div className="pr-6">
-        <ConstructorElement
-          type="top"
-          isLocked={true}
-          thumbnail={bunCheck(targetIngredients, 'image', '', '')}
-          text={bunCheck(targetIngredients, 'name', '(верх)', 'Выберите булку')}
-          price={bunCheck(targetIngredients, 'price', '', '0')}
-        />
+        {
+          ingredients.length > 0 ? <ConstructorElement
+            type="top"
+            isLocked={true}
+            text={bunElementHandler(ingredients, 'name', '(верх)', 'Выберите булку')}
+            price={bunElementHandler(ingredients, 'price', '', '0')}
+            thumbnail={bunElementHandler(ingredients, 'image', '', '')}
+
+          /> : <p className="text text_type_main-medium pt-8 pb-15">
+            Выберите булку
+          </p>
+        }
       </div>
       <ul className={`${style.list} pl-4 pr-4`}>
-      {targetIngredients.map((ingredient, idx) =>
+        {ingredients.map((ingredient, idx) =>
           ingredient.type !== 'bun' && <li key={`${ingredient._id}${idx}`} className={style.item}>
             <DragIcon />
             <ConstructorElement
-              thumbnail={ingredient.image}
               text={ingredient.name}
               price={ingredient.price}
+              thumbnail={ingredient.image}
+              handleClose={handleDeleteIngredient(ingredient)}
             />
           </li>
-        )
-        }
+        )}
       </ul>
       <div className="pr-6">
-        <ConstructorElement
-          type="bottom"
-          isLocked={true}
-          text={bunCheck(targetIngredients, 'name', '(низ)', 'Выберите булку')}
-          price={bunCheck(targetIngredients, 'price', '', '0')}
-          thumbnail={bunCheck(targetIngredients, 'image', '', '')}
-        />
+        {
+          ingredients.length > 0 && <ConstructorElement
+            type="bottom"
+            isLocked={true}
+            text={bunElementHandler(ingredients, 'name', '(низ)', 'Выберите булку')}
+            price={bunElementHandler(ingredients, 'price', '', '0')}
+            thumbnail={bunElementHandler(ingredients, 'image', '', '')}
+          />
+        }
       </div>
-
       <div className={`${style.button_container} pt-6 pr-6`}>
         <div className='mr-10'>
-          <span className="text text_type_digits-medium mr-2">{totalCost}</span>
+          <span className="text text_type_digits-medium mr-2">{orderPrice}</span>
           <CurrencyIcon type="primary" />
         </div>
         <Button onClick={handleOrderButtonClick} className="pt-10" type="primary" size="medium">
@@ -67,5 +84,7 @@ export default function BurgerConstructor({ setOrderDetailsPopup, targetIngredie
 };
 
 BurgerConstructor.propTypes = {
-  setOrderDetailsPopup: PropTypes.func,
+  setOrderDetailsPopup: PropTypes.func.isRequired,
+  setChosenIngredients: PropTypes.func.isRequired,
+  setOrderData: PropTypes.func.isRequired,
 };

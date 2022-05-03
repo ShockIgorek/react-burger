@@ -1,42 +1,40 @@
 import React from 'react';
+import { useContext } from 'react';
 import style from './ingredient-calories.module.css';
-import PropTypes from 'prop-types';
+import { SelectedIngredientContext } from '../../services/selectedIngredientContext';
 
-export default function IngredientCalories({ ingredient }) {
+export default function IngredientCalories() {
+    const selectedIngredient = useContext(SelectedIngredientContext);
     return (
-        <div>
-            <img width="480" height="240" alt={ingredient.name} src={ingredient && ingredient.image} />
-            <p className="text text_type_main-medium pt-4 pb-8">{ingredient && ingredient.name}</p>
+        <div className={`${style.container}`}>
+            <img width="480" height="240" alt={selectedIngredient.name} src={selectedIngredient && selectedIngredient.image} />
+            <p className="text text_type_main-medium pt-4 pb-8">{selectedIngredient && selectedIngredient.name}</p>
             <ul className={`${style.list} pt-8`}>
                 <li className={`${style.item} text text_type_main-default text_color_inactive`}>
                     <span>
                         Калории,ккал
                     </span>
-                    {ingredient.calories}
+                    {selectedIngredient.calories}
                 </li>
                 <li className={`${style.item} text text_type_main-default text_color_inactive`}>
                     <span>
                         Белки, г
                     </span>
-                    {ingredient.proteins}
+                    {selectedIngredient.proteins}
                 </li>
                 <li className={`${style.item} text text_type_main-default text_color_inactive`}>
                     <span>
                         Жиры, г
                     </span>
-                    {ingredient.fat}
+                    {selectedIngredient.fat}
                 </li>
                 <li className={`${style.item} text text_type_main-default text_color_inactive`}>
                     <span>
                         Углеводы, г
                     </span>
-                    {ingredient.carbohydrates}
+                    {selectedIngredient.carbohydrates}
                 </li>
             </ul>
         </div>
     );
 };
-
-IngredientCalories.propTypes = {
-    ingredient: PropTypes.object.isRequired,
-}; 

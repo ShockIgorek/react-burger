@@ -1,5 +1,4 @@
 import React from 'react';
-import { useState } from 'react';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-consturctor';
 import style from './main.module.css';
@@ -9,29 +8,30 @@ export default function Main({
   setOrderDetailsPopup,
   setIngredientPopup,
   setSelectedIngredient,
-  
-
+  setOrderData,
+  setChosenIngredients
 }) {
-  const [targetIngredients, setTargetIngredients] = useState([]);
+
   return (
     <main className={style.main}>
       <section className={style.main_container}>
         <BurgerIngredients 
-        setSelectedIngredient={setSelectedIngredient} 
-        setIngredientPopup={setIngredientPopup} 
-        targetIngredients={targetIngredients}
-        setTargetIngredients={setTargetIngredients} />
+          setChosenIngredients={setChosenIngredients} 
+          setSelectedIngredient={setSelectedIngredient} 
+          setIngredientPopup={setIngredientPopup} />
         <BurgerConstructor 
-        targetIngredients={targetIngredients} 
-        setOrderDetailsPopup={setOrderDetailsPopup} />
+          setOrderData={setOrderData} 
+          setChosenIngredients={setChosenIngredients} 
+          setOrderDetailsPopup={setOrderDetailsPopup} />
       </section>
     </main>
   );
 };
 
 Main.propTypes = {
-  ingredients: PropTypes.array.isRequired,
   setOrderDetailsPopup: PropTypes.func.isRequired,
   setIngredientPopup: PropTypes.func.isRequired,
   setSelectedIngredient: PropTypes.func.isRequired,
+  setOrderData: PropTypes.func.isRequired,
+  setChosenIngredients: PropTypes.func.isRequired,
 }; 
