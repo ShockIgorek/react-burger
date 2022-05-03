@@ -8,21 +8,30 @@ export default function Main({
   setOrderDetailsPopup,
   setIngredientPopup,
   setSelectedIngredient,
-  ingredients
+  setOrderData,
+  setChosenIngredients
 }) {
+
   return (
     <main className={style.main}>
       <section className={style.main_container}>
-        <BurgerIngredients setSelectedIngredient={setSelectedIngredient} setIngredientPopup={setIngredientPopup} ingredients={ingredients} />
-        <BurgerConstructor setOrderDetailsPopup={setOrderDetailsPopup} ingredients={ingredients}/>
+        <BurgerIngredients 
+          setChosenIngredients={setChosenIngredients} 
+          setSelectedIngredient={setSelectedIngredient} 
+          setIngredientPopup={setIngredientPopup} />
+        <BurgerConstructor 
+          setOrderData={setOrderData} 
+          setChosenIngredients={setChosenIngredients} 
+          setOrderDetailsPopup={setOrderDetailsPopup} />
       </section>
     </main>
   );
 };
 
 Main.propTypes = {
-  ingredients: PropTypes.array.isRequired,
   setOrderDetailsPopup: PropTypes.func.isRequired,
   setIngredientPopup: PropTypes.func.isRequired,
   setSelectedIngredient: PropTypes.func.isRequired,
+  setOrderData: PropTypes.func.isRequired,
+  setChosenIngredients: PropTypes.func.isRequired,
 }; 
