@@ -7,7 +7,7 @@ import  {sendIngredients} from '../../utils/Api'
 // import { ChosenIngredientsContext } from '../../services/chosenIngredientsContext';
 import { useDispatch, useSelector } from 'react-redux';
 
-export default function BurgerConstructor({ setOrderDetailsPopup, setOrderData }) {
+export default function BurgerConstructor({ setOrderDetailsPopup }) {
   const dispatch = useDispatch();
   const ingredients = useSelector(state => state.ingredients.chosenIngredients);
   const orderPrice = useMemo(
@@ -16,7 +16,7 @@ export default function BurgerConstructor({ setOrderDetailsPopup, setOrderData }
     const ingredientsIds = ingredients.map(ingredient => ingredient._id)
       sendIngredients(ingredientsIds)
       .then(data => {
-        setOrderData(data)
+        dispatch({ type: 'GET_ORDER_DATA', payload: data });
         setOrderDetailsPopup(true)
       })
       .catch(err => { console.log(err) })
@@ -88,5 +88,5 @@ export default function BurgerConstructor({ setOrderDetailsPopup, setOrderData }
 BurgerConstructor.propTypes = {
   setOrderDetailsPopup: PropTypes.func.isRequired,
   // setChosenIngredients: PropTypes.func.isRequired,
-  setOrderData: PropTypes.func.isRequired,
+  // setOrderData: PropTypes.func.isRequired,
 };

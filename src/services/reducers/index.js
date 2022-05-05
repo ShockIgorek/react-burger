@@ -4,7 +4,11 @@ import {
 import {
     ingredientsReducer
 } from './ingredients';
+import {
+    orderReducer
+} from './order';
 
 export const rootReducer = combineReducers({
     ingredients: ingredientsReducer,
+    orderData: orderReducer,
 });

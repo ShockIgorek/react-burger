@@ -9,12 +9,12 @@ import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import IngredientCalories from '../ingredient-calories/ingredient-calories';
 // import { IngredientsContext } from '../../services/ingredientsContext';
-import { OrderContext } from '../../services/orderContext';
+// import { OrderContext } from '../../services/orderContext';
 // import { ChosenIngredientsContext } from '../../services/chosenIngredientsContext';
 // import { SelectedIngredientContext } from '../../services/selectedIngredientContext';
 // import { compose, createStore, applyMiddleware } from 'redux';
 // import thunk from 'redux-thunk';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 
 export default function App() {
@@ -33,16 +33,17 @@ export default function App() {
       .catch(err => { console.log(err) })
       .finally(() => setIsLoading(false))
   }, [dispatch])
+  
   const [ingredientPopup, setIngredientPopup] = useState(false);
   const [orderDetailsPopup, setOrderDetailsPopup] = useState(false);
   // const [selectedIngredient, setSelectedIngredient] = useState({ element: {} });
-  const [orderData, setOrderData] = useState({})
+  // const [orderData, setOrderData] = useState({})
   // const [chosenIngredients, setChosenIngredients] = useState([]);
-
+  const orderData = useSelector(state => state.orderData.orderDetails);
 
 
   return (
-    <OrderContext.Provider value={orderData}>
+    // <OrderContext.Provider value={orderData}>
       <div className={`${style.app} pb-10`}>
         {
           isLoading ? (
@@ -55,7 +56,7 @@ export default function App() {
                 // setSelectedIngredient={setSelectedIngredient}
                 setOrderDetailsPopup={setOrderDetailsPopup}
                 setIngredientPopup={setIngredientPopup}
-                setOrderData={setOrderData}
+                // setOrderData={setOrderData}
                 // setChosenIngredients={setChosenIngredients}
               />
               {
@@ -79,6 +80,6 @@ export default function App() {
             </>
         }
       </div >
-    </OrderContext.Provider>
+    // </OrderContext.Provider>
   );
 };
