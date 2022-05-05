@@ -1,14 +1,16 @@
 import React from 'react';
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './burger-ingredients.module.css';
 import PropTypes from 'prop-types';
-import { IngredientsContext } from '../../services/ingredientsContext';
-import { ChosenIngredientsContext } from '../../services/chosenIngredientsContext';
+// import { IngredientsContext } from '../../services/ingredientsContext';
+// import { ChosenIngredientsContext } from '../../services/chosenIngredientsContext';
+import { useDispatch, useSelector } from 'react-redux';
 
-export default function BurgerIngredients({ setIngredientPopup, setSelectedIngredient, setChosenIngredients }) {
-    const initialIngredients = useContext(IngredientsContext);
-    const chosenIngredients = useContext(ChosenIngredientsContext);
+export default function BurgerIngredients({ setIngredientPopup}) {
+    const dispatch = useDispatch();
+    const initialIngredients = useSelector(state => state.ingredients.ingredients)
+    const chosenIngredients = useSelector(state => state.ingredients.chosenIngredients);
     const [current, setCurrent] = useState('bun')
     const handleTabClick = (type) => {
         setCurrent(type)
@@ -18,7 +20,7 @@ export default function BurgerIngredients({ setIngredientPopup, setSelectedIngre
         //открытие попапа
         const id = evt.currentTarget.dataset.id;
         const foundIngredient = initialIngredients.find(ingredient => ingredient._id === id);
-        setSelectedIngredient(foundIngredient);
+        dispatch({ type: 'SELECT_INGREDIENT', payload: foundIngredient });
         setIngredientPopup(true);
         //добавление ингредиента
         const selectedBun = chosenIngredients.find(ingredient => ingredient.type === 'bun');
@@ -27,9 +29,9 @@ export default function BurgerIngredients({ setIngredientPopup, setSelectedIngre
         if (targetIngredient.type === 'bun' && selectedBun) {
             const chosenIngredientsClone = chosenIngredients.slice();
             chosenIngredientsClone.splice(selectedBunIndex, 1, targetIngredient);
-            setChosenIngredients([...chosenIngredientsClone])
+            dispatch({ type: 'ADD_INGREDIENT', payload: [...chosenIngredientsClone] });
         } else {
-            setChosenIngredients([...chosenIngredients, targetIngredient])
+            dispatch({ type: 'ADD_INGREDIENT', payload: [...chosenIngredients, targetIngredient] })
         }
     }
     const itemTemplate = ({ image, price, name, _id }) => {
@@ -86,6 +88,6 @@ export default function BurgerIngredients({ setIngredientPopup, setSelectedIngre
 
 BurgerIngredients.propTypes = {
     setIngredientPopup: PropTypes.func.isRequired,
-    setSelectedIngredient: PropTypes.func.isRequired,
-    setChosenIngredients: PropTypes.func.isRequired,
+    // setSelectedIngredient: PropTypes.func.isRequired,
+    // setChosenIngredients: PropTypes.func.isRequired,
 };

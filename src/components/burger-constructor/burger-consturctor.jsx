@@ -1,13 +1,15 @@
 import React from 'react';
-import { useContext, useMemo } from 'react';
+import { useMemo } from 'react';
 import style from './burger-constructor.module.css';
 import PropTypes from 'prop-types';
 import { DragIcon, ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import  {sendIngredients} from '../../utils/Api'
-import { ChosenIngredientsContext } from '../../services/chosenIngredientsContext';
+// import { ChosenIngredientsContext } from '../../services/chosenIngredientsContext';
+import { useDispatch, useSelector } from 'react-redux';
 
-export default function BurgerConstructor({ setOrderDetailsPopup, setOrderData, setChosenIngredients }) {
-  const ingredients = useContext(ChosenIngredientsContext);
+export default function BurgerConstructor({ setOrderDetailsPopup, setOrderData }) {
+  const dispatch = useDispatch();
+  const ingredients = useSelector(state => state.ingredients.chosenIngredients);
   const orderPrice = useMemo(
     () => ingredients.reduce((acc, cur) => cur.type === 'bun' ? acc + (cur.price * 2) : acc + cur.price, 0),[ingredients]);
   const handleOrderButtonClick = () => {
@@ -25,7 +27,7 @@ export default function BurgerConstructor({ setOrderDetailsPopup, setOrderData, 
     const selectedIngredientIndex = ingredients.indexOf(item)
     const chosenIngredientsClone = ingredients.slice();
     chosenIngredientsClone.splice(selectedIngredientIndex, 1);
-    setChosenIngredients([...chosenIngredientsClone])
+    dispatch({ type: 'DELETE_INGREDIENT', payload: chosenIngredientsClone });
   }
   const bunElementHandler = (chosenIngredients, property, trueValue, falseValue) => 
   chosenIngredients.find(ingredient => ingredient.type === 'bun') ? 
@@ -85,6 +87,6 @@ export default function BurgerConstructor({ setOrderDetailsPopup, setOrderData, 
 
 BurgerConstructor.propTypes = {
   setOrderDetailsPopup: PropTypes.func.isRequired,
-  setChosenIngredients: PropTypes.func.isRequired,
+  // setChosenIngredients: PropTypes.func.isRequired,
   setOrderData: PropTypes.func.isRequired,
 };

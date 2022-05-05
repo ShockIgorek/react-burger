@@ -1,10 +1,12 @@
 import React from 'react';
-import { useContext } from 'react';
+// import { useContext } from 'react';
+import { useSelector } from 'react-redux';
 import style from './ingredient-calories.module.css';
-import { SelectedIngredientContext } from '../../services/selectedIngredientContext';
+// import { SelectedIngredientContext } from '../../services/selectedIngredientContext';
 
 export default function IngredientCalories() {
-    const selectedIngredient = useContext(SelectedIngredientContext);
+    // const selectedIngredient = useContext(SelectedIngredientContext);
+    const selectedIngredient = useSelector(state => state.ingredients.selectedIngredient);
     return (
         <div className={`${style.container}`}>
             <img width="480" height="240" alt={selectedIngredient.name} src={selectedIngredient && selectedIngredient.image} />
