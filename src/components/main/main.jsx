@@ -2,13 +2,13 @@ import React from 'react';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-consturctor';
 import style from './main.module.css';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
-export default function Main({
-  setOrderDetailsPopup,
-  setIngredientPopup,
+export default function Main(
+  // setOrderDetailsPopup,
+  // setIngredientPopup,
   // setOrderData,
-}) {
+) {
 
   return (
     <main className={style.main}>
@@ -16,20 +16,22 @@ export default function Main({
         <BurgerIngredients 
           // setChosenIngredients={setChosenIngredients} 
           // setSelectedIngredient={setSelectedIngredient} 
-          setIngredientPopup={setIngredientPopup} />
+          // setIngredientPopup={setIngredientPopup} 
+          />
         <BurgerConstructor 
           // setOrderData={setOrderData} 
           // setChosenIngredients={setChosenIngredients} 
-          setOrderDetailsPopup={setOrderDetailsPopup} />
+          // setOrderDetailsPopup={setOrderDetailsPopup}
+          />
       </section>
     </main>
   );
 };
 
-Main.propTypes = {
-  setOrderDetailsPopup: PropTypes.func.isRequired,
-  setIngredientPopup: PropTypes.func.isRequired,
-  // setSelectedIngredient: PropTypes.func.isRequired,
-  // setOrderData: PropTypes.func.isRequired,
-  // setChosenIngredients: PropTypes.func.isRequired,
-}; 
+// Main.propTypes = {
+//   setOrderDetailsPopup: PropTypes.func.isRequired,
+//   setIngredientPopup: PropTypes.func.isRequired,
+//   // setSelectedIngredient: PropTypes.func.isRequired,
+//   // setOrderData: PropTypes.func.isRequired,
+//   // setChosenIngredients: PropTypes.func.isRequired,
+// }; 

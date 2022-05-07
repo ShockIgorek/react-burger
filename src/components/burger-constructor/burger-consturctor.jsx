@@ -1,13 +1,13 @@
 import React from 'react';
 import { useMemo } from 'react';
 import style from './burger-constructor.module.css';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { DragIcon, ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import  {sendIngredients} from '../../utils/Api'
 // import { ChosenIngredientsContext } from '../../services/chosenIngredientsContext';
 import { useDispatch, useSelector } from 'react-redux';
 
-export default function BurgerConstructor({ setOrderDetailsPopup }) {
+export default function BurgerConstructor() {
   const dispatch = useDispatch();
   const ingredients = useSelector(state => state.ingredients.chosenIngredients);
   const orderPrice = useMemo(
@@ -17,7 +17,7 @@ export default function BurgerConstructor({ setOrderDetailsPopup }) {
       sendIngredients(ingredientsIds)
       .then(data => {
         dispatch({ type: 'GET_ORDER_DATA', payload: data });
-        setOrderDetailsPopup(true)
+        dispatch({ type: 'CHANGE_ORDER_DETAILS_POPUP_STATE', payload: true });
       })
       .catch(err => { console.log(err) })
       .finally(() => { })
@@ -85,8 +85,8 @@ export default function BurgerConstructor({ setOrderDetailsPopup }) {
   );
 };
 
-BurgerConstructor.propTypes = {
-  setOrderDetailsPopup: PropTypes.func.isRequired,
-  // setChosenIngredients: PropTypes.func.isRequired,
-  // setOrderData: PropTypes.func.isRequired,
-};
+// BurgerConstructor.propTypes = {
+//   setOrderDetailsPopup: PropTypes.func.isRequired,
+//   // setChosenIngredients: PropTypes.func.isRequired,
+//   // setOrderData: PropTypes.func.isRequired,
+// };

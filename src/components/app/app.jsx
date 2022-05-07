@@ -34,8 +34,10 @@ export default function App() {
       .finally(() => setIsLoading(false))
   }, [dispatch])
   
-  const [ingredientPopup, setIngredientPopup] = useState(false);
-  const [orderDetailsPopup, setOrderDetailsPopup] = useState(false);
+  // const [ingredientPopup, setIngredientPopup] = useState(false);
+  // const [orderDetailsPopup, setOrderDetailsPopup] = useState(false);
+  const ingredientPopup = useSelector(state => state.popupState.ingredientPopup);
+  const orderDetailsPopup = useSelector(state => state.popupState.orderDetailsPopup);
   // const [selectedIngredient, setSelectedIngredient] = useState({ element: {} });
   // const [orderData, setOrderData] = useState({})
   // const [chosenIngredients, setChosenIngredients] = useState([]);
@@ -54,15 +56,16 @@ export default function App() {
               <AppHeader />
               <Main
                 // setSelectedIngredient={setSelectedIngredient}
-                setOrderDetailsPopup={setOrderDetailsPopup}
-                setIngredientPopup={setIngredientPopup}
+                // setOrderDetailsPopup={setOrderDetailsPopup}
+                // setIngredientPopup={setIngredientPopup}
                 // setOrderData={setOrderData}
                 // setChosenIngredients={setChosenIngredients}
               />
               {
                 orderDetailsPopup && (
                   <Modal
-                    modalCloseHandler={setOrderDetailsPopup}>
+                    // modalCloseHandler={setOrderDetailsPopup}
+                    >
                     {orderData && <OrderDetails />}
                   </Modal>
                 )
@@ -71,9 +74,11 @@ export default function App() {
                 ingredientPopup && (
                   <Modal
                     title='Детали ингредиентов'
-                    modalCloseHandler={setIngredientPopup}>
+                    // modalCloseHandler={setIngredientPopup}
+                    >
                     <IngredientCalories
-                      popupCloseHandler={setIngredientPopup} />
+                      // popupCloseHandler={setIngredientPopup} 
+                      />
                   </Modal>
                 )
               }

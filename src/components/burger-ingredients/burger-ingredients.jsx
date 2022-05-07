@@ -2,12 +2,12 @@ import React from 'react';
 import { useState } from 'react';
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './burger-ingredients.module.css';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 // import { IngredientsContext } from '../../services/ingredientsContext';
 // import { ChosenIngredientsContext } from '../../services/chosenIngredientsContext';
 import { useDispatch, useSelector } from 'react-redux';
 
-export default function BurgerIngredients({ setIngredientPopup}) {
+export default function BurgerIngredients() {
     const dispatch = useDispatch();
     const initialIngredients = useSelector(state => state.ingredients.ingredients)
     const chosenIngredients = useSelector(state => state.ingredients.chosenIngredients);
@@ -21,7 +21,7 @@ export default function BurgerIngredients({ setIngredientPopup}) {
         const id = evt.currentTarget.dataset.id;
         const foundIngredient = initialIngredients.find(ingredient => ingredient._id === id);
         dispatch({ type: 'SELECT_INGREDIENT', payload: foundIngredient });
-        setIngredientPopup(true);
+        dispatch({ type: 'CHANGE_INGREDIENTS_POPUP_STATE', payload: true });
         //добавление ингредиента
         const selectedBun = chosenIngredients.find(ingredient => ingredient.type === 'bun');
         const selectedBunIndex = chosenIngredients.indexOf(selectedBun);
@@ -86,8 +86,8 @@ export default function BurgerIngredients({ setIngredientPopup}) {
     );
 };
 
-BurgerIngredients.propTypes = {
-    setIngredientPopup: PropTypes.func.isRequired,
-    // setSelectedIngredient: PropTypes.func.isRequired,
-    // setChosenIngredients: PropTypes.func.isRequired,
-};
+// BurgerIngredients.propTypes = {
+//     setIngredientPopup: PropTypes.func.isRequired,
+//     // setSelectedIngredient: PropTypes.func.isRequired,
+//     // setChosenIngredients: PropTypes.func.isRequired,
+// };
