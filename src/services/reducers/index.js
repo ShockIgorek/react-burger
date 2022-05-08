@@ -9,7 +9,7 @@ import {
 } from './order';
 import {
     popupReducer
-} from './popup';
+} from './modal';
 
 export const rootReducer = combineReducers({
     ingredients: ingredientsReducer,

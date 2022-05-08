@@ -3,24 +3,21 @@ import { useMemo } from 'react';
 import style from './burger-constructor.module.css';
 // import PropTypes from 'prop-types';
 import { DragIcon, ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import  {sendIngredients} from '../../utils/Api'
+// import  {sendIngredients} from '../../utils/Api'
 // import { ChosenIngredientsContext } from '../../services/chosenIngredientsContext';
+import { getOrder } from '../../services/actions/order'
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function BurgerConstructor() {
   const dispatch = useDispatch();
+
   const ingredients = useSelector(state => state.ingredients.chosenIngredients);
   const orderPrice = useMemo(
-    () => ingredients.reduce((acc, cur) => cur.type === 'bun' ? acc + (cur.price * 2) : acc + cur.price, 0),[ingredients]);
+    () => ingredients.reduce((acc, cur) => cur.type === 'bun' ? acc + (cur.price * 2) : acc + cur.price, 0), [ingredients]);
   const handleOrderButtonClick = () => {
     const ingredientsIds = ingredients.map(ingredient => ingredient._id)
-      sendIngredients(ingredientsIds)
-      .then(data => {
-        dispatch({ type: 'GET_ORDER_DATA', payload: data });
-        dispatch({ type: 'CHANGE_ORDER_DETAILS_POPUP_STATE', payload: true });
-      })
-      .catch(err => { console.log(err) })
-      .finally(() => { })
+    dispatch(getOrder(ingredientsIds))
+    dispatch({ type: 'CHANGE_ORDER_DETAILS_POPUP_STATE', payload: true })
   }
   //удаление
   const handleDeleteIngredient = (item) => () => {
@@ -29,9 +26,9 @@ export default function BurgerConstructor() {
     chosenIngredientsClone.splice(selectedIngredientIndex, 1);
     dispatch({ type: 'DELETE_INGREDIENT', payload: chosenIngredientsClone });
   }
-  const bunElementHandler = (chosenIngredients, property, trueValue, falseValue) => 
-  chosenIngredients.find(ingredient => ingredient.type === 'bun') ? 
-  `${(chosenIngredients.find(ingredient => ingredient.type === 'bun'))[property]} ${trueValue}` : falseValue
+  const bunElementHandler = (chosenIngredients, property, trueValue, falseValue) =>
+    chosenIngredients.find(ingredient => ingredient.type === 'bun') ?
+      `${(chosenIngredients.find(ingredient => ingredient.type === 'bun'))[property]} ${trueValue}` : falseValue
   return (
     <div className={`${style.constructor_container} pt-25`}>
       <div className="pr-6">
@@ -77,7 +74,12 @@ export default function BurgerConstructor() {
           <span className="text text_type_digits-medium mr-2">{orderPrice}</span>
           <CurrencyIcon type="primary" />
         </div>
-        <Button onClick={handleOrderButtonClick} className="pt-10" type="primary" size="medium">
+        <Button 
+        onClick={handleOrderButtonClick} 
+        className="pt-10" 
+        type="primary" 
+        size="medium"
+        disabled={ingredients.length > 0 ? false : true}>
           Оформить заказ
         </Button>
       </div>

@@ -1,7 +1,7 @@
 import {
     CHANGE_ORDER_DETAILS_POPUP_STATE,
     CHANGE_INGREDIENTS_POPUP_STATE
-} from '../actions/popup';
+} from '../actions/modal';
 
 const initialState = {
     isOrderDetailsPopupOpen: false,
@@ -11,16 +11,16 @@ const initialState = {
 export const popupReducer = (state = initialState, action) => {
 
     switch (action.type) {
-        case CHANGE_ORDER_DETAILS_POPUP_STATE: {
-            return {
-                ...state,
-                isOrderDetailsPopupOpen: action.payload,
-            };
-        }
         case CHANGE_INGREDIENTS_POPUP_STATE: {
             return {
                 ...state,
                 isIngredientsPopupOpen: action.payload
+            };
+        }
+        case CHANGE_ORDER_DETAILS_POPUP_STATE: {
+            return {
+                ...state,
+                isOrderDetailsPopupOpen: action.payload,
             };
         }
         default: {

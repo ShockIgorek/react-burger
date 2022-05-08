@@ -1,13 +1,13 @@
 
 import React from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect} from 'react';
 import style from './app.module.css';
 import AppHeader from '../app-header/app-header';
 import Main from '../main/main';
-import { getIngredients } from '../../utils/Api'
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import IngredientCalories from '../ingredient-calories/ingredient-calories';
+import { getIngredients } from '../../services/actions/ingredients';
 // import { IngredientsContext } from '../../services/ingredientsContext';
 // import { OrderContext } from '../../services/orderContext';
 // import { ChosenIngredientsContext } from '../../services/chosenIngredientsContext';
@@ -21,18 +21,10 @@ export default function App() {
   const dispatch = useDispatch();
   // const enhancer = composeEnhancers(applyMiddleware(thunk));
   // const [ingredients, setIngredients] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
+  const isLoading = useSelector(state => state.ingredients.ingredientsRequest);
   useEffect(() => {
-    setIsLoading(true)
-    getIngredients()
-      .then(ingredients => {
-        if (ingredients) {
-          dispatch({ type: 'GET_INGREDIENTS', payload: ingredients.data });
-        }
-      })
-      .catch(err => { console.log(err) })
-      .finally(() => setIsLoading(false))
-  }, [dispatch])
+    dispatch(getIngredients())}, [dispatch])
   
   // const [ingredientPopup, setIngredientPopup] = useState(false);
   // const [orderDetailsPopup, setOrderDetailsPopup] = useState(false);
