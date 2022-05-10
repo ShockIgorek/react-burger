@@ -1,44 +1,99 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './burger-ingredients.module.css';
-// import PropTypes from 'prop-types';
-// import { IngredientsContext } from '../../services/ingredientsContext';
-// import { ChosenIngredientsContext } from '../../services/chosenIngredientsContext';
-import { useDispatch, useSelector } from 'react-redux';
+import { compareCoords } from '../../utils/compareCoords';
 
 export default function BurgerIngredients() {
     const dispatch = useDispatch();
-    const initialIngredients = useSelector(state => state.ingredients.ingredients)
-    const chosenIngredients = useSelector(state => state.ingredients.chosenIngredients);
+    const initialIngredients = useSelector(state => state.ingredientsData.ingredients)
+    const chosenIngredients = useSelector(state => state.ingredientsData.chosenIngredients);
     const [current, setCurrent] = useState('bun')
+    const [isIngredientDragging, setIngredientDrag] = useState(false);
+    const [cursorPosition, setCursorPosition] = useState({});
+    const [ingredientPosition, setIngredientPosition] = useState({});
+    const ingredientRef = useRef();
+
+    useEffect(() => {
+        if (ingredientRef.current) {
+            ingredientRef.current.style.transform = `translate(${ingredientPosition.x}px, ${ingredientPosition.y}px)`
+        }
+    }, [ingredientPosition]);
+
+    const scrollHandler = (evt) => {
+        evt.target.addEventListener('scroll', function () {
+            setCurrent(compareCoords(style.main_container))
+        });
+    }
+
+    const handleMouseDown = (e) => {
+        setIngredientDrag(true);
+
+        setCursorPosition({
+            ...cursorPosition,
+            x: e.clientX - e.currentTarget.getBoundingClientRect().left,
+            y: e.clientY - e.currentTarget.getBoundingClientRect().top
+        });
+    };
+
+    const handleMouseMove = (e) => {
+        if (!isIngredientDragging) return;
+        e.stopPropagation();
+        e.preventDefault();
+
+        setIngredientPosition({
+            ...ingredientPosition,
+            x: e.clientX - cursorPosition.x,
+            y: e.clientY - cursorPosition.y
+        });
+    };
+
+    const handleMouseUp = () => {
+        setIngredientDrag(false);
+    };
+
     const handleTabClick = (type) => {
         setCurrent(type)
         document.querySelector(`#${type}`).scrollIntoView({ block: "start", behavior: "smooth" })
     }
-    const onClick = (evt) => {
-        //открытие попапа
-        const id = evt.currentTarget.dataset.id;
-        const foundIngredient = initialIngredients.find(ingredient => ingredient._id === id);
+
+    const handleIngredientExplore = (evt) => {
+        evt.preventDefault()
+        const id = evt.currentTarget.dataset.id
+        const foundIngredient = initialIngredients.find(ingredient => ingredient._id === id)
         dispatch({ type: 'SELECT_INGREDIENT', payload: foundIngredient });
         dispatch({ type: 'CHANGE_INGREDIENTS_POPUP_STATE', payload: true });
-        //добавление ингредиента
-        const selectedBun = chosenIngredients.find(ingredient => ingredient.type === 'bun');
-        const selectedBunIndex = chosenIngredients.indexOf(selectedBun);
-        const targetIngredient = initialIngredients.find(ingredient => ingredient._id === evt.currentTarget.dataset.id);
+    }
+
+    const handleChoseIngredient = (evt) => {
+        const targetIngredient = initialIngredients.find(ingredient => ingredient._id === evt.currentTarget.dataset.id)
+        const selectedBun = chosenIngredients.find(ingredient => ingredient.type === 'bun')
+        const selectedBunIndex = chosenIngredients.indexOf(selectedBun)
+
         if (targetIngredient.type === 'bun' && selectedBun) {
             const chosenIngredientsClone = chosenIngredients.slice();
             chosenIngredientsClone.splice(selectedBunIndex, 1, targetIngredient);
             dispatch({ type: 'ADD_INGREDIENT', payload: [...chosenIngredientsClone] });
         } else {
-            dispatch({ type: 'ADD_INGREDIENT', payload: [...chosenIngredients, targetIngredient] })
+            dispatch({ type: 'ADD_INGREDIENT', payload: [...chosenIngredients, targetIngredient] });
         }
     }
+
     const itemTemplate = ({ image, price, name, _id }) => {
         let ingredientCounter = 0;
         chosenIngredients.forEach(ingredient => ingredient.name === name && (ingredient.type === 'bun' ? ingredientCounter += 2 : ingredientCounter += 1))
 
-        return (<li data-id={_id} key={_id} onClick={onClick} className={style.ingredient}>
+        return (<li 
+        data-id={_id} 
+        key={_id} 
+        ref={ingredientRef} 
+        onMouseMove={handleMouseMove} 
+        onMouseDown={handleMouseDown} 
+        onMouseUp={handleMouseUp} 
+        onClick={handleChoseIngredient} 
+        onContextMenu={handleIngredientExplore} 
+        className={style.ingredient}>
             <img alt={name} src={image} className={`${style.image} ml-4 mr-4`} />
             <div className={`${style.price_info} mt-4 mb-4`}>
                 <span className="text text_type_digits-default mr-2">{price}</span>
@@ -48,6 +103,7 @@ export default function BurgerIngredients() {
             <Counter count={ingredientCounter} size="default" />
         </li>)
     }
+
     return (
         <div className={style.constructor}>
             <h1 className="mt-10 mb-5 text text_type_main-large">Соберите бургер</h1>
@@ -62,7 +118,7 @@ export default function BurgerIngredients() {
                     Начинки
                 </Tab>
             </div>
-            <div className={`${style.ingredients} mt-10 ingredients-container`}>
+            <div onScroll={scrollHandler} className={`${style.ingredients} mt-10 ingredients-container`}>
                 <h2 id="bun" className="mb-6 text text_type_main-medium">
                     Булки
                 </h2>
@@ -85,9 +141,3 @@ export default function BurgerIngredients() {
         </div>
     );
 };
-
-// BurgerIngredients.propTypes = {
-//     setIngredientPopup: PropTypes.func.isRequired,
-//     // setSelectedIngredient: PropTypes.func.isRequired,
-//     // setChosenIngredients: PropTypes.func.isRequired,
-// };

@@ -2,29 +2,29 @@ import {
     sendIngredients as send
 } from '../../utils/Api'
 
-export const GET_ORDER = 'GET_ORDER';
-export const GET_ORDER_FAILED = 'GET_ORDER_FAILED';
-export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
-export const DELETE_ORDER = 'DELETE_ORDER'
+export const GET_ORDER_DATA = 'GET_ORDER_DATA';
+export const GET_ORDER_DATA_FAILED = 'GET_ORDER_DATA_FAILED';
+export const GET_ORDER_DATA_SUCCESS = 'GET_ORDER_DATA_SUCCESS';
+export const DELETE_ORDER_DATA = 'DELETE_ORDER_DATA'
 
-export function getOrder(ingredientsIds) {
+export function getOrderData(ingredientsIds) {
     return function (dispatch) {
         dispatch({
-            type: GET_ORDER,
+            type: GET_ORDER_DATA,
         })
 
         send(ingredientsIds)
             .then(data => {
                 if (data) {
                     dispatch({
-                        type: GET_ORDER_SUCCESS,
+                        type: GET_ORDER_DATA_SUCCESS,
                         payload: data
                     })
 
                 }
             })
             .catch(err => dispatch({
-                type: GET_ORDER_FAILED
+                type: GET_ORDER_DATA_FAILED
             }))
     }
 }

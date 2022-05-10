@@ -1,18 +1,10 @@
-import {
-    combineReducers
-} from 'redux';
-import {
-    ingredientsReducer
-} from './ingredients';
-import {
-    orderReducer
-} from './order';
-import {
-    popupReducer
-} from './modal';
+import { combineReducers } from 'redux';
+import { ingredientsReducer } from './ingredients';
+import { orderReducer } from './order';
+import { popupReducer } from './modal';
 
 export const rootReducer = combineReducers({
-    ingredients: ingredientsReducer,
-    orderData: orderReducer,
-    popupState: popupReducer,
+  ingredientsData: ingredientsReducer,
+  orderData: orderReducer,
+  popupState: popupReducer,
 });

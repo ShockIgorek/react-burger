@@ -1,82 +1,53 @@
-
 import React from 'react';
-import { useEffect} from 'react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import style from './app.module.css';
 import AppHeader from '../app-header/app-header';
 import Main from '../main/main';
-import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import IngredientCalories from '../ingredient-calories/ingredient-calories';
+import Modal from '../modal/modal';
 import { getIngredients } from '../../services/actions/ingredients';
-// import { IngredientsContext } from '../../services/ingredientsContext';
-// import { OrderContext } from '../../services/orderContext';
-// import { ChosenIngredientsContext } from '../../services/chosenIngredientsContext';
-// import { SelectedIngredientContext } from '../../services/selectedIngredientContext';
-// import { compose, createStore, applyMiddleware } from 'redux';
-// import thunk from 'redux-thunk';
-import { useSelector, useDispatch } from 'react-redux';
-
 
 export default function App() {
-  const dispatch = useDispatch();
-  // const enhancer = composeEnhancers(applyMiddleware(thunk));
-  // const [ingredients, setIngredients] = useState([]);
-  // const [isLoading, setIsLoading] = useState(false);
-  const isLoading = useSelector(state => state.ingredients.ingredientsRequest);
-  useEffect(() => {
-    dispatch(getIngredients())}, [dispatch])
-  
-  // const [ingredientPopup, setIngredientPopup] = useState(false);
-  // const [orderDetailsPopup, setOrderDetailsPopup] = useState(false);
-  const ingredientPopup = useSelector(state => state.popupState.ingredientPopup);
-  const orderDetailsPopup = useSelector(state => state.popupState.orderDetailsPopup);
-  // const [selectedIngredient, setSelectedIngredient] = useState({ element: {} });
-  // const [orderData, setOrderData] = useState({})
-  // const [chosenIngredients, setChosenIngredients] = useState([]);
   const orderData = useSelector(state => state.orderData.orderDetails);
+  const ingredientsPopup = useSelector(state => state.popupState.ingredientsPopup);
+  const orderDetailsPopup = useSelector(state => state.popupState.orderDetailsPopup);
+  const ingredientsRequest = useSelector(state => state.ingredientsData.ingredientsRequest);
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch])
 
   return (
-    // <OrderContext.Provider value={orderData}>
-      <div className={`${style.app} pb-10`}>
-        {
-          isLoading ? (
-            <h1 className="text text_type_main-large">
-              Пожалуйста подождите...
-            </h1>) :
-            <>
-              <AppHeader />
-              <Main
-                // setSelectedIngredient={setSelectedIngredient}
-                // setOrderDetailsPopup={setOrderDetailsPopup}
-                // setIngredientPopup={setIngredientPopup}
-                // setOrderData={setOrderData}
-                // setChosenIngredients={setChosenIngredients}
-              />
-              {
-                orderDetailsPopup && (
-                  <Modal
-                    // modalCloseHandler={setOrderDetailsPopup}
-                    >
-                    {orderData && <OrderDetails />}
-                  </Modal>
-                )
-              }
-              {
-                ingredientPopup && (
-                  <Modal
-                    title='Детали ингредиентов'
-                    // modalCloseHandler={setIngredientPopup}
-                    >
-                    <IngredientCalories
-                      // popupCloseHandler={setIngredientPopup} 
-                      />
-                  </Modal>
-                )
-              }
-            </>
-        }
-      </div >
-    // </OrderContext.Provider>
+    <div className={`${style.app} pb-10`}>
+      {
+        ingredientsRequest ? (<h1 className="text text_type_main-large">
+          Пожалуйста подождите...
+        </h1>) :
+          <>
+            <AppHeader />
+            <Main />
+            {
+              orderDetailsPopup && (
+                <Modal>
+                  {orderData ? <OrderDetails /> : <h1 className="text text_type_main-large">
+                    Пожалуйста подождите...
+                  </h1>}
+                </Modal>
+              )
+            }
+            {
+              ingredientsPopup && (
+                <Modal title='Детали ингредиентов'>
+                  <IngredientCalories />
+                </Modal>
+              )
+            }
+          </>
+      }
+    </div >
+
   );
 };

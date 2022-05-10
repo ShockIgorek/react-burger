@@ -1,10 +1,10 @@
 import {
     GET_INGREDIENTS,
+    GET_INGREDIENTS_FAILED,
+    GET_INGREDIENTS_SUCCESS,
     SELECT_INGREDIENT,
     ADD_INGREDIENT,
     DELETE_INGREDIENT,
-    GET_INGREDIENTS_FAILED,
-    GET_INGREDIENTS_SUCCESS,
     DELETE_SELECTED_INGREDIENT
 } from '../actions/ingredients';
 
@@ -17,6 +17,7 @@ const initialState = {
 };
 
 export const ingredientsReducer = (state = initialState, action) => {
+
     switch (action.type) {
         case GET_INGREDIENTS_FAILED: {
             return {

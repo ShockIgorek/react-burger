@@ -1,28 +1,48 @@
-import mainApi from '../../utils/Api';
+import {
+    GET_ORDER_DATA,
+    GET_ORDER_DATA_FAILED,
+    GET_ORDER_DATA_SUCCESS,
+    DELETE_ORDER_DATA
+} from '../actions/order';
 
-export const GET_ORDER = 'GET_ORDER';
-export const GET_ORDER_FAILED = 'GET_ORDER_FAILED';
-export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
-export const DELETE_ORDER = 'DELETE_ORDER'
+const initialState = {
+    orderDetails: null,
+    orderRequest: false,
+    orderFailed: false,
+};
 
-export function getOrder(ingredientsIds) {
-    return function (dispatch) {
-        dispatch({
-            type: GET_ORDER,
-        })
+export const orderReducer = (state = initialState, action) => {
 
-        mainApi.sendIngredients(ingredientsIds)
-            .then(data => {
-                if (data) {
-                    dispatch({
-                        type: GET_ORDER_SUCCESS,
-                        payload: data
-                    })
-                    // dispatch({ type: 'CHANGE_ORDER_DETAILS_POPUP_STATE', payload: true })
-                }
-            })
-            .catch(err => dispatch({
-                type: GET_ORDER_FAILED
-            }))
+    switch (action.type) {
+        case GET_ORDER_DATA: {
+            return {
+                ...state,
+                orderRequest: true,
+                orderFailed: false,
+            };
+        }
+        case GET_ORDER_DATA_FAILED: {
+            return {
+                ...state,
+                orderRequest: false,
+                orderFailed: true,
+            };
+        }
+        case GET_ORDER_DATA_SUCCESS: {
+            return {
+                ...state,
+                orderRequest: false,
+                orderDetails: action.payload,
+            };
+        }
+        case DELETE_ORDER_DATA: {
+            return {
+                ...state,
+                orderDetails: null,
+            };
+        }
+        default: {
+            return state;
+        }
     }
-}
+};
