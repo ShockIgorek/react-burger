@@ -1,8 +1,7 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import style from './ingredient-calories.module.css';
-
-export default function IngredientCalories() {
+import { useSelector } from 'react-redux';
+const IngredientCalories = () => {
     const selectedIngredient = useSelector(state => state.ingredientsData.selectedIngredient);
 
     return (
@@ -38,3 +37,5 @@ export default function IngredientCalories() {
         </div>
     );
 };
+
+export default IngredientCalories;

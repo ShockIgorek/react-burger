@@ -1,82 +1,100 @@
-import React from 'react';
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { DragIcon, ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './burger-constructor.module.css';
 import { getOrderData } from '../../services/actions/order'
+import { useDrop } from "react-dnd";
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import ChosenIngredient from '../chosen-ingredient/chosen-ingredient';
+import update from 'immutability-helper';
+import { sortIngredients } from '../../services/actions/ingredients';
+import { changeOrderDetailsPopupState } from '../../services/actions/modal';
+import PropTypes from 'prop-types';
 
-export default function BurgerConstructor() {
+const BurgerConstructor = ({ onDropHandler }) => {
   const dispatch = useDispatch();
   const chosenIngredients = useSelector(state => state.ingredientsData.chosenIngredients);
-
+  const moveIngredient = useCallback((dragIndex, hoverIndex) => {
+    const ingredientWithTypeBan = chosenIngredients.filter(ingredient => ingredient.type === 'bun')
+    const ingredientsWithoutBan = chosenIngredients.filter(ingredient => ingredient.type !== 'bun')
+    const sortedIngredients = update(ingredientsWithoutBan, {
+      $splice: [
+        [dragIndex, 1],
+        [hoverIndex, 0, ingredientsWithoutBan[dragIndex]],
+      ],
+    }, [ingredientsWithoutBan])
+    const sortedInregientsWithBun = [...ingredientWithTypeBan, ...sortedIngredients]
+    dispatch(sortIngredients([...sortedInregientsWithBun]));
+  }, [chosenIngredients, dispatch]);
   const orderPrice = useMemo(() => chosenIngredients.reduce((acc, cur) => cur.type === 'bun' ? acc + (cur.price * 2) : acc + cur.price, 0), [chosenIngredients])
-
+  const [{ isHover }, burgerIngredientsContainer] = useDrop({
+    accept: "ingredient",
+    drop(ingredientId) {
+      onDropHandler(ingredientId);
+    },
+    collect: monitor => ({
+      isHover: monitor.isOver(),
+    })
+  });
+  const borderColor = isHover ? '#8585AD' : 'transparent';
   const handleOrderButtonClick = () => {
     const ingredientsIds = chosenIngredients.map(ingredient => ingredient._id)
     dispatch(getOrderData(ingredientsIds))
-    dispatch({ type: 'CHANGE_ORDER_DETAILS_POPUP_STATE', payload: true })
-  }
-
-  const handleDeleteIngredient = (item) => (e) => {
-    const selectedIngredientIndex = chosenIngredients.indexOf(item)
-    const chosenIngredientsClone = chosenIngredients.slice();
-    chosenIngredientsClone.splice(selectedIngredientIndex, 1);
-    dispatch({ type: 'DELETE_INGREDIENT', payload: chosenIngredientsClone });
+    dispatch(changeOrderDetailsPopupState(true))
   }
 
   const bunElementHandler = (chosenIngredients, property, trueValue, falseValue) => chosenIngredients.find(ingredient => ingredient.type === 'bun') ? `${(chosenIngredients.find(ingredient => ingredient.type === 'bun'))[property]} ${trueValue}` : falseValue
 
   return (
-    <div className={`${style.constructor_container} pt-25`}>
-      <div className={`${style.constructor_element} pr-6`}>
-        {
-          chosenIngredients.length > 0 ? <ConstructorElement
-            type="top"
-            isLocked={true}
-            text={bunElementHandler(chosenIngredients, 'name', '(верх)', 'Выберите булку')}
-            price={bunElementHandler(chosenIngredients, 'price', '', '0')}
-            thumbnail={bunElementHandler(chosenIngredients, 'image', '', '')}
-
-          /> : <p className="text text_type_main-medium pt-8 pb-15">
-            Выберите булку
-          </p>
-        }
-      </div>
-      <ul className={`${style.list} pl-4 pr-4`}>
-        {chosenIngredients.map((ingredient, idx) =>
-          ingredient.type !== 'bun' && <li key={`${ingredient._id}${idx}`} className={style.item}>
-            <DragIcon />
+    <DndProvider backend={HTML5Backend}>
+      <div ref={burgerIngredientsContainer} style={{ borderColor }} className={`${style.constructor_container} mt-25 pt-5 pb-5`}>
+        <div className={`${style.item} pr-5`} style={{ borderColor }}>
+          {chosenIngredients.length > 0 ? 
             <ConstructorElement
-              text={ingredient.name}
+              type="top"
               isLocked={true}
-              price={ingredient.price}
-              thumbnail={ingredient.image}
-              handleClose={handleDeleteIngredient(ingredient)}
-            />
-          </li>
-        )}
-      </ul>
-      <div className="pr-6">
-        {
-          chosenIngredients.length > 0 && <ConstructorElement
-            type="bottom"
-            isLocked={true}
-            text={bunElementHandler(chosenIngredients, 'name', '(низ)', 'Выберите булку')}
-            price={bunElementHandler(chosenIngredients, 'price', '', '0')}
-            thumbnail={bunElementHandler(chosenIngredients, 'image', '', '')}
-          />
-        }
-      </div>
-
-      <div className={`${style.button_container} pt-6 pr-6`}>
-        <div className='mr-10'>
-          <span className="text text_type_digits-medium mr-2">{orderPrice}</span>
-          <CurrencyIcon type="primary" />
+              text={bunElementHandler(chosenIngredients, 'name', '(верх)', 'Выберите булку')}
+              price={bunElementHandler(chosenIngredients, 'price', '', '0')}
+              thumbnail={bunElementHandler(chosenIngredients, 'image', '', '')}
+            /> : <p className="text text_type_main-large pt-3">
+              Выберите булку
+            </p>
+          }
         </div>
-        <Button disabled={chosenIngredients.length > 0 ? false : true} onClick={handleOrderButtonClick} className="pt-10" type="primary" size="medium">
-          Оформить заказ
-        </Button>
+        <ul className={`${style.list} pl-4 pr-4`}>
+          {chosenIngredients.map((ingredient, idx) =>
+            ingredient.type !== 'bun' && <ChosenIngredient key={ingredient.uuid} index={idx} moveIngredient={moveIngredient} ingredient={ingredient} id={`${ingredient._id}${idx}`} />
+          )}
+        </ul>
+        <div className="pr-5">
+          {
+            chosenIngredients.length > 0 && 
+            <ConstructorElement
+              type="bottom"
+              isLocked={true}
+              text={bunElementHandler(chosenIngredients, 'name', '(низ)', 'Выберите булку')}
+              price={bunElementHandler(chosenIngredients, 'price', '', '0')}
+              thumbnail={bunElementHandler(chosenIngredients, 'image', '', '')}
+            />
+          }
+        </div>
+        <div className={`${style.button_container} pt-5 pr-5`}>
+          <div className='mr-10'>
+            <span className="text text_type_digits-medium mr-2">{orderPrice}</span>
+            <CurrencyIcon type="primary" />
+          </div>
+          <Button disabled={chosenIngredients.length > 0 ? false : true} onClick={handleOrderButtonClick} className="pt-10" type="primary" size="medium">
+            Оформить заказ
+          </Button>
+        </div>
       </div>
-    </div>
+    </DndProvider>
   );
 };
+
+BurgerConstructor.propTypes = {
+  onDropHandler: PropTypes.func.isRequired,
+};
+
+export default BurgerConstructor;

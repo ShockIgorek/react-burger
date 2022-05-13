@@ -12,7 +12,6 @@ const initialState = {
 };
 
 export const orderReducer = (state = initialState, action) => {
-
     switch (action.type) {
         case GET_ORDER_DATA: {
             return {

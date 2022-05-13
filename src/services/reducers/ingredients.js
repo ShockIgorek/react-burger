@@ -5,8 +5,11 @@ import {
     SELECT_INGREDIENT,
     ADD_INGREDIENT,
     DELETE_INGREDIENT,
-    DELETE_SELECTED_INGREDIENT
+    DELETE_SELECTED_INGREDIENT,
+    SORT_INGREDIENTS,
+    DELETE_ALL_INGREDIENTS
 } from '../actions/ingredients';
+
 
 const initialState = {
     ingredients: [],
@@ -19,6 +22,18 @@ const initialState = {
 export const ingredientsReducer = (state = initialState, action) => {
 
     switch (action.type) {
+        case DELETE_ALL_INGREDIENTS: {
+            return {
+                ...state,
+                chosenIngredients: [],
+            };
+        }
+        case SORT_INGREDIENTS: {
+            return {
+                ...state,
+                chosenIngredients: action.payload
+            };
+        }
         case GET_INGREDIENTS_FAILED: {
             return {
                 ...state,

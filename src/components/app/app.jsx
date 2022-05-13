@@ -8,10 +8,13 @@ import OrderDetails from '../order-details/order-details';
 import IngredientCalories from '../ingredient-calories/ingredient-calories';
 import Modal from '../modal/modal';
 import { getIngredients } from '../../services/actions/ingredients';
+import { changeOrderDetailsPopupState, changeIngredientsPopupState } from '../../services/actions/modal';
+import { deleteSelectedIngredient } from '../../services/actions/ingredients';
+import { deleteOrderData } from '../../services/actions/order';
 
-export default function App() {
+const App = () => {
   const orderData = useSelector(state => state.orderData.orderDetails);
-  const ingredientsPopup = useSelector(state => state.popupState.ingredientsPopup);
+  const ingredientsPopup= useSelector(state => state.popupState.ingredientsPopup);
   const orderDetailsPopup = useSelector(state => state.popupState.orderDetailsPopup);
   const ingredientsRequest = useSelector(state => state.ingredientsData.ingredientsRequest);
   const dispatch = useDispatch();
@@ -20,10 +23,16 @@ export default function App() {
     dispatch(getIngredients());
   }, [dispatch])
 
+  const handlePopupClose = () => {
+    orderDetailsPopup ? dispatch(changeOrderDetailsPopupState(false)) : dispatch(changeIngredientsPopupState(false));
+    orderDetailsPopup ? dispatch(deleteOrderData()) : dispatch(deleteSelectedIngredient())
+  }
+
   return (
     <div className={`${style.app} pb-10`}>
       {
-        ingredientsRequest ? (<h1 className="text text_type_main-large">
+        ingredientsRequest ? (
+        <h1 className="text text_type_main-large">
           Пожалуйста подождите...
         </h1>) :
           <>
@@ -31,16 +40,17 @@ export default function App() {
             <Main />
             {
               orderDetailsPopup && (
-                <Modal>
-                  {orderData ? <OrderDetails /> : <h1 className="text text_type_main-large">
+                <Modal handlePopupClose={handlePopupClose}>
+                  {orderData ? <OrderDetails /> : 
+                  <h1 className="text text_type_main-large">
                     Пожалуйста подождите...
                   </h1>}
                 </Modal>
               )
             }
             {
-              ingredientsPopup && (
-                <Modal title='Детали ингредиентов'>
+              ingredientsPopup&& (
+                <Modal handlePopupClose={handlePopupClose} title='Детали ингредиентов'>
                   <IngredientCalories />
                 </Modal>
               )
@@ -51,3 +61,5 @@ export default function App() {
 
   );
 };
+
+export default App;

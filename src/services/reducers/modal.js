@@ -4,17 +4,16 @@ import {
 } from '../actions/modal';
 
 const initialState = {
-    orderDetailsPopup : false,
+    orderDetailsPopup: false,
     ingredientsPopup: false,
 };
 
 export const popupReducer = (state = initialState, action) => {
-
     switch (action.type) {
         case CHANGE_ORDER_DETAILS_POPUP_STATE: {
             return {
                 ...state,
-                orderDetailsPopup : action.payload,
+                orderDetailsPopup: action.payload,
             };
         }
         case CHANGE_INGREDIENTS_POPUP_STATE: {
