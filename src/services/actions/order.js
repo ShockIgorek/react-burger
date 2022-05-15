@@ -23,11 +23,7 @@ export function getOrderData(ingredientsIds) {
                         type: GET_ORDER_DATA_SUCCESS,
                         payload: data
                     })
-
                 }
-            })
-            .catch(err => dispatch({
-                type: GET_ORDER_DATA_FAILED
-            }))
+            }).catch(err => setOrderDataLoadingFailed())
     }
 }
