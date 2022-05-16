@@ -1,4 +1,3 @@
-import React from 'react';
 import { useMemo, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
