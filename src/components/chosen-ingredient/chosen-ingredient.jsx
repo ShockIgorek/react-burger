@@ -6,6 +6,7 @@ import { useDrag, useDrop } from "react-dnd";
 import { useRef } from 'react';
 import { deleteIngredient } from '../../services/actions/ingredients';
 import PropTypes from 'prop-types';
+import { ingredientTypes } from '../../utils/types';
 
 const ChosenIngredient = ({ ingredient, id, moveIngredient, index }) => {
     const { name, price, image, } = ingredient;
@@ -73,23 +74,11 @@ const ChosenIngredient = ({ ingredient, id, moveIngredient, index }) => {
     )
 }
 
+ChosenIngredient.propTypes = ingredientTypes
 ChosenIngredient.propTypes = {
-    ingredient: PropTypes.shape({
-        calories: PropTypes.number.isRequired,
-        carbohydrates: PropTypes.number.isRequired,
-        fat: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired,
-        image_large: PropTypes.string.isRequired,
-        image_mobile: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        proteins: PropTypes.number.isRequired,
-        type: PropTypes.string.isRequired,
-        _id: PropTypes.string.isRequired,
-    }),
     id: PropTypes.string.isRequired,
     moveIngredient: PropTypes.func.isRequired,
-    index: PropTypes.number.isRequired,
-};
+    index: PropTypes.number.isRequired
+}
 
 export default ChosenIngredient;

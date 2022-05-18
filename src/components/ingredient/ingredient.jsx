@@ -8,7 +8,8 @@ import {
 import { useDrag } from "react-dnd";
 import {selectIngredient} from "../../services/actions/ingredients";
 import { changeIngredientsPopupState } from "../../services/actions/modal";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
+import {ingredientTypes} from "../../utils/types"
 
 const Ingredient = ({ ingredient }) => {
     const { image, price, name, _id } = ingredient;
@@ -71,20 +72,6 @@ const Ingredient = ({ ingredient }) => {
     );
 };
 
-Ingredient.propTypes = {
-    ingredient: PropTypes.shape({
-        calories: PropTypes.number.isRequired,
-        carbohydrates: PropTypes.number.isRequired,
-        fat: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired,
-        image_large: PropTypes.string.isRequired,
-        image_mobile: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        proteins: PropTypes.number.isRequired,
-        type: PropTypes.string.isRequired,
-        _id: PropTypes.string.isRequired,
-    }),
-};
+Ingredient.propTypes = ingredientTypes
 
 export default Ingredient;
