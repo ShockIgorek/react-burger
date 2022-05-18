@@ -11,7 +11,7 @@ const BurgerIngredients = () => {
     const [current, setCurrent] = useState('bun')
     const scrollHandler = (evt) => {
         evt.target.addEventListener('scroll', function () {
-            setCurrent(compareCoords(style.main_container))
+            setCurrent(compareCoords(style.constructor))
         });
     }
     const handleTabClick = (type) => {
@@ -19,7 +19,7 @@ const BurgerIngredients = () => {
         document.querySelector(`#${type}`).scrollIntoView({ block: "start", behavior: "smooth" })
     }
     return (
-        <div className={style.main_container}>
+        <div className={style.constructor}>
             <h1 className="mt-10 mb-5 text text_type_main-large">Соберите бургер</h1>
             <div className={style.header}>
                 <Tab value="bun" active={current === 'bun'} onClick={handleTabClick}>
