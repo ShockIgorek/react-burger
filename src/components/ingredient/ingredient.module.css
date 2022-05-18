@@ -1,0 +1,28 @@
+.item {
+    position: relative;
+    box-sizing: border-box;
+    border-radius: 8px;
+    transition: all .2s ease;
+}
+
+.item:hover {
+    cursor: grab;
+    background-color: #4c4cff16;
+    box-shadow: 0 0 10px  #4c4cffbf;
+}
+
+.moving {
+    opacity: 1;
+    cursor: grabbing;
+    box-shadow: 0 0 10px  #4c4cffbf;
+}
+
+.price_info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.text {
+    text-align: center;
+}

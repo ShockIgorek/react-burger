@@ -1,0 +1,13 @@
+.item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    width: 100%;
+}
+
+.item:hover {
+    cursor: move;
+    background-color: #4c4cff16;
+    box-shadow: 0 0 10px #4c4cffbf;
+}
