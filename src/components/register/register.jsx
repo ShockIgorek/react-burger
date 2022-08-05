@@ -17,8 +17,8 @@ const Register = () => {
         console.log("click");
     };
 
-    const onPasswordChange = (e) => {
-        setPasswordValue(e.target.value);
+    const onPasswordChange = (evt) => {
+        setPasswordValue(evt.target.value);
     };
 
     return (
