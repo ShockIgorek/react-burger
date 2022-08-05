@@ -11,15 +11,15 @@ const Login = () => {
 
     const onIconClick = () => {
         setTimeout(() => inputRef.current.focus(), 0);
-        alert("Icon Click Callback");
+        console.log("click");
     }
 
-    const onPasswordChange = (e) => {
-        setPasswordValue(e.target.value)
+    const onPasswordChange = (evt) => {
+        setPasswordValue(evt.target.value)
     }
 
     return (
-        <section className={style.wrapper}>
+        <article className={style.window}>
             <form className={style.form}>
                 <p className={`${style.title} text text_type_main-medium`}>Вход</p>
                 <Input
@@ -40,12 +40,18 @@ const Login = () => {
                 </Button>
             </form>
             <p className="text text_type_main-default text_color_inactive">
-                Вы — новый пользователь? <Link className={style.link} to="/">Зарегистрироваться</Link>
+                Вы — новый пользователь?
+                <Link className={style.link} to="/">
+                    Зарегистрироваться
+                </Link>
             </p>
             <p className="text text_type_main-default text_color_inactive">
-                Забыли пароль? <Link className={style.link} to="/">Восстановить пароль</Link>
+                Забыли пароль? 
+                <Link className={style.link} to="/">
+                    Восстановить пароль
+                </Link>
             </p>
-        </section>
+        </article>
     )
 }
 
