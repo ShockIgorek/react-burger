@@ -8,10 +8,6 @@ import OrderDetails from '../order-details/order-details';
 import IngredientCalories from '../ingredient-calories/ingredient-calories';
 import Modal from '../modal/modal';
 import { getIngredients } from '../../services/actions/ingredients';
-import Login from '../login/login';
-import Register from '../register/register';
-import ForgotPassword from '../forgot-password/forgot-password';
-import ResetPassword from '../reset-password/reset-password';
 import { changeOrderDetailsPopupState, changeIngredientsPopupState } from '../../services/actions/modal';
 import { deleteSelectedIngredient } from '../../services/actions/ingredients';
 import { deleteOrderData } from '../../services/actions/order';
@@ -40,10 +36,10 @@ const App = () => {
           Пожалуйста подождите...
         </h1>) :
           <>
-            <ResetPassword />
+            {/* <ResetPassword />
             <ForgotPassword />
             <Register />
-            <Login />
+            <Login /> */}
             <AppHeader />
             <Main />
             {

@@ -27,7 +27,7 @@ export default function AppHeader() {
             <div className={style.logo}>
                 <Logo />
             </div>
-            <a className={`p-5 ${style.link} ${style.profile}`} to="/">
+            <a className={`p-5 ${style.link} ${style.profile}`} to="/profile">
                 <ProfileIcon type="secondary" />
                 <span className={`ml-2`}>
                     Личный кабинет
