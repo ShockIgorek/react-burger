@@ -1,4 +1,5 @@
 import React from 'react';
+import { Route, Switch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-consturctor';
@@ -15,7 +16,7 @@ import ResetPassword from '../reset-password/reset-password';
 import Profile from '../profile/profile';
 
 
-const Main = () => {
+const Main = ({ onPasswordForgot }) => {
   const dispatch = useDispatch();
   const chosenIngredients = useSelector(state => state.ingredientsData.chosenIngredients);
   const initialIngredients = useSelector(state => state.ingredientsData.ingredients);
@@ -36,17 +37,30 @@ const Main = () => {
 
   return (
     <main className={style.main}>
-      <Profile />
-      <Login />
-      <Register />
-      <ForgotPassword />
-      <ResetPassword />
-
       <DndProvider backend={HTML5Backend}>
-        <section className={style.main_container}>
-          <BurgerIngredients />
-          <BurgerConstructor onDropHandler={handleDrop} />
-        </section>
+        <Switch>
+          <Route exact path="/">
+            <section className={style.main_container}>
+              <BurgerIngredients />
+              <BurgerConstructor onDropHandler={handleDrop} />
+            </section>
+          </Route>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/register">
+            <Register />
+          </Route>
+          <Route path="/forgot-password">
+            <ForgotPassword onPasswordForgot={onPasswordForgot} />
+          </Route>
+          <Route path="/reset-password">
+            <ResetPassword />
+          </Route>
+          <Route path="/profile">
+            <Profile />
+          </Route>
+        </Switch>
       </DndProvider>
     </main>
   );

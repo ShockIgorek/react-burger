@@ -20,7 +20,7 @@ const Profile = () => {
             <nav className={style.navigation}>
                 <ul className={`${style.list}`}>
                     <li className={style.list_item}>
-                        <Link className={`${style.link} text text_type_main-medium`} to="/">Профиль</Link>
+                        <Link className={`${style.link} text text_type_main-medium`} to="/profile">Профиль</Link>
                     </li>
                     <li>
                         <Link className={`${style.link} text text_type_main-medium`} to="/">История заказов</Link>
