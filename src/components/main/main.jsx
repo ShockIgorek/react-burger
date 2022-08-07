@@ -7,11 +7,12 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { addIngredient } from '../../services/actions/ingredients';
 
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
 import Login from '../login/login';
 import Register from '../register/register';
 import ForgotPassword from '../forgot-password/forgot-password';
 import ResetPassword from '../reset-password/reset-password';
+import Profile from '../profile/profile';
 
 
 const Main = () => {
@@ -35,10 +36,11 @@ const Main = () => {
 
   return (
     <main className={style.main}>
-          <Login />
-          <Register />
-          <ForgotPassword />
-          <ResetPassword />
+      <Profile />
+      <Login />
+      <Register />
+      <ForgotPassword />
+      <ResetPassword />
 
       <DndProvider backend={HTML5Backend}>
         <section className={style.main_container}>
