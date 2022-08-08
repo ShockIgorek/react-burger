@@ -26,3 +26,15 @@ export function sendIngredients(ingredientsIds) {
     body: JSON.stringify(burgerData)
   }).then((res) => checkResult(res));
 }
+
+export function sendEmail(email) {
+  return fetch(`${BASE_URL}/password-reset`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email: email,
+    }),
+  }).then((res) => checkResult(res));;
+}

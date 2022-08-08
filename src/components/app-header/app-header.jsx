@@ -8,7 +8,7 @@ export default function AppHeader() {
             <nav>
                 <ul className={style.links}>
                     <li>
-                        <NavLink className={`pt-5 pr-5 pb-5 ${style.link}`} to="/">
+                        <NavLink className={`pt-5 pr-5 pb-5 ${style.link}`} to="/" activeClassName={style.link_active}>
                             <BurgerIcon type="secondary" />
                             <span className={`ml-2`}>
                                 Конструктор
@@ -16,7 +16,7 @@ export default function AppHeader() {
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink className={`p-5 ${style.link}`} to="/">
+                        <NavLink className={`p-5 ${style.link}`} to="/" activeClassName={style.link_active}>
                             <ListIcon type="secondary" />
                             <span className={`ml-2`}>
                                 Лента заказов
@@ -28,7 +28,7 @@ export default function AppHeader() {
             <div className={style.logo}>
                 <Logo />
             </div>
-            <NavLink className={`p-5 ${style.link} ${style.profile}`} to="/profile">
+            <NavLink className={`p-5 ${style.link} ${style.profile}`} to="/profile" activeClassName={style.link_active}>
                 <ProfileIcon type="secondary" />
                 <span className={`ml-2`}>
                     Личный кабинет

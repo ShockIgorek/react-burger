@@ -11,6 +11,7 @@ import { getIngredients } from '../../services/actions/ingredients';
 import { changeOrderDetailsPopupState, changeIngredientsPopupState } from '../../services/actions/modal';
 import { deleteSelectedIngredient } from '../../services/actions/ingredients';
 import { deleteOrderData } from '../../services/actions/order';
+import {sendEmail as send} from '../../utils/Api'
 
 const App = () => {
   const orderData = useSelector(state => state.orderData.orderDetails);
@@ -28,6 +29,18 @@ const App = () => {
     orderDetailsPopup ? dispatch(deleteOrderData()) : dispatch(deleteSelectedIngredient())
   }
 
+  const handlePasswordForgot = (email) => {
+    send(email)
+      .then(res => {
+        if (res.token) {
+          console.log(res)
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
   return (
     <div className={`${style.app} pb-10`}>
       {
@@ -36,12 +49,8 @@ const App = () => {
           Пожалуйста подождите...
         </h1>) :
           <>
-            {/* <ResetPassword />
-            <ForgotPassword />
-            <Register />
-            <Login /> */}
             <AppHeader />
-            <Main />
+            <Main onPasswordForgot={handlePasswordForgot} />
             {
               orderDetailsPopup && (
                 <Modal handlePopupClose={handlePopupClose}>
