@@ -15,6 +15,7 @@ const ForgotPassword = ({ onPasswordForgot }) => {
 
     const handleSubmit = (evt) => {
         evt.preventDefault()
+
         if (!value) {
             return;
         }
@@ -27,7 +28,9 @@ const ForgotPassword = ({ onPasswordForgot }) => {
     return (
         <section className={style.window}>
             <form onSubmit={handleSubmit} className={style.form}>
-                <p className={`${style.title} text text_type_main-medium mb-6`}>
+                <p
+                    className={`${style.title} text text_type_main-medium mb-6`}
+                >
                     Восстановление пароля
                 </p>
                 <div className="mb-6">
@@ -49,13 +52,14 @@ const ForgotPassword = ({ onPasswordForgot }) => {
             </form>
             <p className="text text_type_main-default text_color_inactive">
                 {"Вспомнили пароль? "}
-                <Link className={style.link} to="/">
+                <Link className={style.link} to="/login">
                     Войти
                 </Link>
             </p>
         </section>
     );
 };
+
 ForgotPassword.propTypes = {
     onPasswordForgot: PropTypes.func.isRequired,
 };

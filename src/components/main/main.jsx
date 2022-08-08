@@ -9,14 +9,16 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { addIngredient } from '../../services/actions/ingredients';
 
 
-import Login from '../login/login';
-import Register from '../register/register';
-import ForgotPassword from '../forgot-password/forgot-password';
-import ResetPassword from '../reset-password/reset-password';
-import Profile from '../profile/profile';
+import Login from '../../pages/login/login'
+import Register from '../../pages/register/register';
+import ForgotPassword from '../../pages/forgot-password/forgot-password';
+import ResetPassword from '../../pages/reset-password/reset-password';
+import Profile from '../../pages/profile/profile';
+
+import PropTypes from 'prop-types';
 
 
-const Main = ({ onPasswordForgot }) => {
+const Main = ({ onPasswordForgot, handlePasswordSave }) => {
   const dispatch = useDispatch();
   const chosenIngredients = useSelector(state => state.ingredientsData.chosenIngredients);
   const initialIngredients = useSelector(state => state.ingredientsData.ingredients);
@@ -36,7 +38,7 @@ const Main = ({ onPasswordForgot }) => {
   };
 
   return (
-    <main className={style.main}>
+    <main className={`${style.main} pb-10`}>
       <DndProvider backend={HTML5Backend}>
         <Switch>
           <Route exact path="/">
@@ -55,7 +57,7 @@ const Main = ({ onPasswordForgot }) => {
             <ForgotPassword onPasswordForgot={onPasswordForgot} />
           </Route>
           <Route path="/reset-password">
-            <ResetPassword />
+            <ResetPassword handlePasswordSave={handlePasswordSave} />
           </Route>
           <Route path="/profile">
             <Profile />
@@ -64,6 +66,11 @@ const Main = ({ onPasswordForgot }) => {
       </DndProvider>
     </main>
   );
+};
+
+Main.propTypes = {
+  onPasswordForgot: PropTypes.func.isRequired,
+  handlePasswordSave: PropTypes.func.isRequired
 };
 
 export default Main;

@@ -36,5 +36,18 @@ export function sendEmail(email) {
     body: JSON.stringify({
       email: email,
     }),
+  }).then((res) => checkResult(res));
+}
+
+export function resetPassword({ passwordValue, codeValue }) {
+  return fetch(`${BASE_URL}/password-reset/reset`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      password: passwordValue,
+      token: codeValue,
+    }),
   }).then((res) => checkResult(res));;
 }

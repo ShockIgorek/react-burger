@@ -1,20 +1,17 @@
-import { useState, useRef } from "react";
-import style from "./register.module.css";
-import { Link } from "react-router-dom";
-import {
-    Input,
-    Button,
-    PasswordInput,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import style from './login.module.css';
+import { useState, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import { Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
-const Register = () => {
+
+const Login = () => {
     const [value, setValue] = useState("");
     const [passwordValue, setPasswordValue] = useState("");
     const inputRef = useRef(null);
 
     const onIconClick = () => {
         setTimeout(() => inputRef.current.focus(), 0);
-        console.log("click");
+        alert("Icon Click Callback");
     };
 
     const onPasswordChange = (evt) => {
@@ -22,30 +19,16 @@ const Register = () => {
     };
 
     return (
-        <article className={style.window}>
+        <section className={style.window}>
             <form className={style.form}>
                 <p className={`${style.title} text text_type_main-medium`}>
-                    Регистрация
+                    Вход
                 </p>
-                <div className="mt-6 mb-6">
-                    <Input
-                        type={"text"}
-                        placeholder={"Имя"}
-                        onChange={(e) => setValue(e.target.value)}
-                        value={value}
-                        name={"name"}
-                        error={false}
-                        ref={inputRef}
-                        onIconClick={onIconClick}
-                        errorText={"Ошибка"}
-                        size={"default"}
-                    />
-                </div>
-                <div className="mb-6">
+                <div className='mt-6 mb-6'>
                     <Input
                         type={"text"}
                         placeholder={"E-mail"}
-                        onChange={(evt) => setValue(evt.target.value)}
+                        onChange={(e) => setValue(e.target.value)}
                         value={value}
                         name={"e-mail"}
                         error={false}
@@ -63,17 +46,25 @@ const Register = () => {
                     />
                 </div>
                 <Button type="primary" size="medium">
-                    Зарегистрироваться
+                    Войти
                 </Button>
             </form>
             <p className="text text_type_main-default text_color_inactive">
-                {"Уже зарегистрированы? "}
-                <Link className={style.link} to="/login">
-                    Войти
+                {'Вы — новый пользователь? '}
+                <Link className={style.link} to="/register">
+                    Зарегистрироваться
                 </Link>
             </p>
-        </article>
+            <p className="text text_type_main-default text_color_inactive mt-4">
+                {'Забыли пароль? '}
+                <Link className={style.link} to="/forgot-password">
+                    Восстановить пароль
+                </Link>
+            </p>
+        </section>
     );
 };
 
-export default Register;
+
+
+export default Login; 

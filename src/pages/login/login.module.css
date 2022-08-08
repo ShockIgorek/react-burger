@@ -1,9 +1,9 @@
 .window {
-    flex-grow: 1;
     display: flex;
     align-items: center;
-    justify-content: center;
+    width: 100%;
     flex-direction: column;
+    padding-top: 180px;
 }
 
 .form {
@@ -11,12 +11,12 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 480px;
     margin-bottom: 88px;
+    width: 480px;
 }
 
 .link {
-    color: #4C4CFF;
+    color: #4c4cff;
     text-decoration: none;
     transition: all 0.3s ease;
 }
@@ -26,5 +26,5 @@
 }
 
 .link:active {
-    color: #FFF;
+    color: white;
 }

@@ -1,30 +1,41 @@
 import { useState, useRef } from "react";
 import style from "./reset-password.module.css";
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
 import {
     Input,
     Button,
     PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-const ResetPassword = () => {
-    const [value, setValue] = useState("");
+const ResetPassword = ({ handlePasswordSave }) => {
+    const [codeValue, setCodeValue] = useState("");
     const [passwordValue, setPasswordValue] = useState("");
     const inputRef = useRef(null);
 
     const onIconClick = () => {
         setTimeout(() => inputRef.current.focus(), 0);
-        alert("Icon Click Callback");
     };
 
-    const onPasswordChange = (evt) => {
-        setPasswordValue(evt.target.value);
+    const onPasswordChange = (e) => {
+        setPasswordValue(e.target.value);
     };
+
+    const handleSubmit = (evt) => {
+        evt.preventDefault()
+
+        if (!passwordValue || !codeValue) {
+            return;
+        }
+        handlePasswordSave({ passwordValue, codeValue })
+    }
 
     return (
-        <article className={style.window}>
-            <form className={style.form}>
-                <p className={`${style.title} text text_type_main-medium mb-6`}>
+        <section className={style.window}>
+            <form onSubmit={handleSubmit} className={style.form}>
+                <p
+                    className={`${style.title} text text_type_main-medium mb-6`}
+                >
                     Восстановление пароля
                 </p>
                 <PasswordInput
@@ -37,8 +48,8 @@ const ResetPassword = () => {
                     <Input
                         type={"text"}
                         placeholder={"Введите код из письма"}
-                        onChange={(e) => setValue(e.target.value)}
-                        value={value}
+                        onChange={(e) => setCodeValue(e.target.value)}
+                        value={codeValue}
                         name={"e-mail"}
                         error={false}
                         ref={inputRef}
@@ -53,12 +64,16 @@ const ResetPassword = () => {
             </form>
             <p className="text text_type_main-default text_color_inactive">
                 {"Вспомнили пароль? "}
-                <Link className={style.link} to="/">
+                <Link className={style.link} to="/login">
                     Войти
                 </Link>
             </p>
-        </article>
+        </section>
     );
+};
+
+ResetPassword.propTypes = {
+    handlePasswordSave: PropTypes.func.isRequired,
 };
 
 export default ResetPassword;

@@ -2,7 +2,6 @@
     display: flex;
     width: 100%;
     max-width: 1240px;
-    padding-top: 180px;
 }
 
 .navigation {
@@ -22,6 +21,10 @@
     text-decoration: none;
     color: #8585ad;
     transition: all 0.3s ease;
+}
+
+.link_active {
+    color: white;
 }
 
 .link:hover {

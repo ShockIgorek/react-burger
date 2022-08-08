@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import style from "./profile.module.css";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import {
     Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -16,17 +16,17 @@ const Profile = () => {
     }
 
     return (
-        <article className={style.window}>
+        <section className={style.window}>
             <nav className={style.navigation}>
                 <ul className={`${style.list}`}>
                     <li className={style.list_item}>
-                        <Link className={`${style.link} text text_type_main-medium`} to="/profile">Профиль</Link>
+                        <NavLink activeClassName={style.link_active} className={`${style.link} text text_type_main-medium`} exact to="/profile">Профиль</NavLink>
                     </li>
                     <li>
-                        <Link className={`${style.link} text text_type_main-medium`} to="/">История заказов</Link>
+                        <NavLink activeClassName={style.link_active} className={`${style.link} text text_type_main-medium`} exact to="/profile/orders">История заказов</NavLink>
                     </li>
                     <li>
-                        <Link className={`${style.link} text text_type_main-medium`} to="/">Выход</Link>
+                        <NavLink activeClassName={style.link_active} className={`${style.link} text text_type_main-medium`} exact to="/">Выход</NavLink>
                     </li>
                 </ul>
                 <p className={`${style.text} text text_type_main-default text_color_inactive`}>В этом разделе вы можете изменить свои персональные данные</p>
@@ -35,7 +35,7 @@ const Profile = () => {
                 <Input
                     type={'text'}
                     placeholder={'Имя'}
-                    onChange={e => setNameValue(e.target.value)}
+                    onChange={evt => setNameValue(evt.target.value)}
                     icon={'EditIcon'}
                     value={nameValue}
                     name={'name'}
@@ -48,7 +48,7 @@ const Profile = () => {
                 <Input
                     type={'text'}
                     placeholder={'Логин'}
-                    onChange={e => setLoginValue(e.target.value)}
+                    onChange={evt => setLoginValue(evt.target.value)}
                     icon={'EditIcon'}
                     value={loginValue}
                     name={'name'}
@@ -61,7 +61,7 @@ const Profile = () => {
                 <Input
                     type={'text'}
                     placeholder={'Пароль'}
-                    onChange={e => setPasswordValue(e.target.value)}
+                    onChange={evt => setPasswordValue(evt.target.value)}
                     icon={'EditIcon'}
                     value={passwordValue}
                     name={'name'}
@@ -72,7 +72,7 @@ const Profile = () => {
                     size={'default'}
                 />
             </form>
-        </article>
+        </section>
     );
 };
 

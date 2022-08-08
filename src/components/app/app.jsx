@@ -11,7 +11,8 @@ import { getIngredients } from '../../services/actions/ingredients';
 import { changeOrderDetailsPopupState, changeIngredientsPopupState } from '../../services/actions/modal';
 import { deleteSelectedIngredient } from '../../services/actions/ingredients';
 import { deleteOrderData } from '../../services/actions/order';
-import {sendEmail as send} from '../../utils/Api'
+import {sendEmail as send} from '../../utils/Api';
+import {resetPassword as reset} from '../../utils/Api'
 
 const App = () => {
   const orderData = useSelector(state => state.orderData.orderDetails);
@@ -27,6 +28,17 @@ const App = () => {
   const handlePopupClose = () => {
     orderDetailsPopup ? dispatch(changeOrderDetailsPopupState(false)) : dispatch(changeIngredientsPopupState(false));
     orderDetailsPopup ? dispatch(deleteOrderData()) : dispatch(deleteSelectedIngredient())
+  }
+  const handlePasswordSave = (password) => {
+    reset(password)
+      .then(res => {
+        console.log(res)
+        if (res.token) {
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   const handlePasswordForgot = (email) => {
