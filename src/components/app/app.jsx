@@ -62,7 +62,7 @@ const App = () => {
         </h1>) :
           <>
             <AppHeader />
-            <Main onPasswordForgot={handlePasswordForgot} />
+            <Main handlePasswordSave={handlePasswordSave} onPasswordForgot={handlePasswordForgot} />
             {
               orderDetailsPopup && (
                 <Modal handlePopupClose={handlePopupClose}>
