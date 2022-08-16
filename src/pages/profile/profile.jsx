@@ -12,7 +12,6 @@ const Profile = () => {
     const inputRef = useRef(null)
     const onIconClick = () => {
         setTimeout(() => inputRef.current.focus(), 0)
-        console.log('Click')
     }
 
     return (

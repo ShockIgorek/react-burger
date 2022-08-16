@@ -15,10 +15,9 @@ import ForgotPassword from '../../pages/forgot-password/forgot-password';
 import ResetPassword from '../../pages/reset-password/reset-password';
 import Profile from '../../pages/profile/profile';
 
-import PropTypes from 'prop-types';
 
 
-const Main = ({ onPasswordForgot, handlePasswordSave }) => {
+const Main = () => {
   const dispatch = useDispatch();
   const chosenIngredients = useSelector(state => state.ingredientsData.chosenIngredients);
   const initialIngredients = useSelector(state => state.ingredientsData.ingredients);
@@ -38,7 +37,7 @@ const Main = ({ onPasswordForgot, handlePasswordSave }) => {
   };
 
   return (
-    <main className={`${style.main} pb-10`}>
+    <main>
       <DndProvider backend={HTML5Backend}>
         <Switch>
           <Route exact path="/">
@@ -54,10 +53,10 @@ const Main = ({ onPasswordForgot, handlePasswordSave }) => {
             <Register />
           </Route>
           <Route path="/forgot-password">
-            <ForgotPassword onPasswordForgot={onPasswordForgot} />
+            <ForgotPassword/>
           </Route>
           <Route path="/reset-password">
-            <ResetPassword handlePasswordSave={handlePasswordSave} />
+            <ResetPassword />
           </Route>
           <Route path="/profile">
             <Profile />
@@ -68,9 +67,5 @@ const Main = ({ onPasswordForgot, handlePasswordSave }) => {
   );
 };
 
-Main.propTypes = {
-  onPasswordForgot: PropTypes.func.isRequired,
-  handlePasswordSave: PropTypes.func.isRequired
-};
 
 export default Main;

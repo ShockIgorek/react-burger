@@ -1,6 +1,8 @@
 import { useState, useRef } from "react";
 import style from "./reset-password.module.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { resetPassword } from "../../services/actions/user";
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
     Input,
@@ -8,15 +10,13 @@ import {
     PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-const ResetPassword = ({ handlePasswordSave }) => {
+const ResetPassword = () => {
     const [codeValue, setCodeValue] = useState("");
     const [passwordValue, setPasswordValue] = useState("");
     const inputRef = useRef(null);
-
-    const onIconClick = () => {
-        setTimeout(() => inputRef.current.focus(), 0);
-    };
-
+    const dispatch = useDispatch();
+    const history = useHistory();
+    
     const onPasswordChange = (e) => {
         setPasswordValue(e.target.value);
     };
@@ -27,7 +27,10 @@ const ResetPassword = ({ handlePasswordSave }) => {
         if (!passwordValue || !codeValue) {
             return;
         }
-        handlePasswordSave({ passwordValue, codeValue })
+        dispatch(resetPassword(passwordValue, codeValue))
+        setCodeValue("");
+        setPasswordValue("");
+        history.push('/');
     }
 
     return (
@@ -48,12 +51,11 @@ const ResetPassword = ({ handlePasswordSave }) => {
                     <Input
                         type={"text"}
                         placeholder={"Введите код из письма"}
-                        onChange={(e) => setCodeValue(e.target.value)}
+                        onChange={(evt) => setCodeValue(evt.target.value)}
                         value={codeValue}
                         name={"e-mail"}
                         error={false}
                         ref={inputRef}
-                        onIconClick={onIconClick}
                         errorText={"Ошибка"}
                         size={"default"}
                     />
@@ -73,7 +75,7 @@ const ResetPassword = ({ handlePasswordSave }) => {
 };
 
 ResetPassword.propTypes = {
-    handlePasswordSave: PropTypes.func.isRequired,
+    onPasswordSave: PropTypes.func.isRequired,
 };
 
 export default ResetPassword;

@@ -8,22 +8,25 @@ import {
     Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-const ForgotPassword = ({ onPasswordForgot }) => {
-    const [value, setValue] = useState("");
+import { forgotPassword } from "../../services/actions/user";
+import { useDispatch, useSelector } from 'react-redux';
+
+const ForgotPassword = () => {
+    const [emailValue, setEmailValue] = useState("");
     const inputRef = useRef(null);
+    const dispatch = useDispatch();
     const history = useHistory();
 
     const handleSubmit = (evt) => {
         evt.preventDefault()
-
-        if (!value) {
+        if (!emailValue) {
             return;
         }
 
-        onPasswordForgot(value)
-        setValue('')
-        history.push('/reset-password');
-    }
+        dispatch(forgotPassword(emailValue));
+        setEmailValue("");
+        history.push('/reset-password')
+    };
 
     return (
         <section className={style.window}>
@@ -37,8 +40,8 @@ const ForgotPassword = ({ onPasswordForgot }) => {
                     <Input
                         type={"text"}
                         placeholder={"Укажите e-mail"}
-                        onChange={(evt) => setValue(evt.target.value)}
-                        value={value}
+                        onChange={(evt) => setEmailValue(evt.target.value)}
+                        value={emailValue}
                         name={"e-mail"}
                         error={false}
                         ref={inputRef}
@@ -60,8 +63,5 @@ const ForgotPassword = ({ onPasswordForgot }) => {
     );
 };
 
-ForgotPassword.propTypes = {
-    onPasswordForgot: PropTypes.func.isRequired,
-};
 
 export default ForgotPassword;

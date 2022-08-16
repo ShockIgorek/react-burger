@@ -1,29 +1,37 @@
 import { useState, useRef } from "react";
 import style from "./register.module.css";
-import { Link } from "react-router-dom";
-import {
-    Input,
-    Button,
-    PasswordInput,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { Link, useHistory } from "react-router-dom";
+import { registration } from "../../services/actions/user";
+import { useDispatch, useSelector } from 'react-redux';
+import { Input, Button, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from 'prop-types';
 
 const Register = () => {
-    const [value, setValue] = useState("");
+    const [nameValue, setNameValue] = useState("");
+    const [emailValue, setEmailValue] = useState("");
     const [passwordValue, setPasswordValue] = useState("");
     const inputRef = useRef(null);
+    const dispatch = useDispatch();
+    const history = useHistory();
 
-    const onIconClick = () => {
-        setTimeout(() => inputRef.current.focus(), 0);
-        alert("Icon Click Callback");
-    };
 
     const onPasswordChange = (evt) => {
         setPasswordValue(evt.target.value);
     };
 
+    const handleSubmit = (evt) => {
+        evt.preventDefault()
+        if (!nameValue || !emailValue || !passwordValue) {
+            return;
+        }
+        dispatch(registration(emailValue, nameValue, passwordValue));
+        history.push('/');
+    };
+
+
     return (
         <section className={style.window}>
-            <form className={style.form}>
+            <form className={style.form} onSubmit={handleSubmit}>
                 <p className={`${style.title} text text_type_main-medium`}>
                     Регистрация
                 </p>
@@ -31,12 +39,11 @@ const Register = () => {
                     <Input
                         type={"text"}
                         placeholder={"Имя"}
-                        onChange={(evt) => setValue(evt.target.value)}
-                        value={value}
+                        onChange={(evt) => setNameValue(evt.target.value)}
+                        value={nameValue}
                         name={"name"}
                         error={false}
                         ref={inputRef}
-                        onIconClick={onIconClick}
                         errorText={"Ошибка"}
                         size={"default"}
                     />
@@ -45,12 +52,11 @@ const Register = () => {
                     <Input
                         type={"text"}
                         placeholder={"E-mail"}
-                        onChange={(e) => setValue(e.target.value)}
-                        value={value}
+                        onChange={(evt) => setEmailValue(evt.target.value)}
+                        value={emailValue}
                         name={"e-mail"}
                         error={false}
                         ref={inputRef}
-                        onIconClick={onIconClick}
                         errorText={"Ошибка"}
                         size={"default"}
                     />
@@ -74,6 +80,10 @@ const Register = () => {
             </p>
         </section>
     );
+};
+
+Register.propTypes = {
+    onRegister: PropTypes.func.isRequired,
 };
 
 export default Register;
