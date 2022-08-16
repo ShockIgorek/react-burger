@@ -76,5 +76,16 @@ export function register(email, name, password) {
       password,
       name,
     }),
-  }).then((res) => checkResult(res));;
+  }).then((res) => checkResult(res));
+}
+
+export function getUserData(token) {
+  return fetch(`${BASE_URL}/auth/user`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+      'authorization': token,
+    },
+    body: JSON.stringify({}),
+  }).then((res) => checkResult(res));
 }

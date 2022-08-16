@@ -25,7 +25,6 @@ const Register = () => {
             return;
         }
         dispatch(registration(emailValue, nameValue, passwordValue));
-        history.push('/');
     };
 
 

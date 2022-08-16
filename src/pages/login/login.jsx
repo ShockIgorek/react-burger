@@ -18,7 +18,6 @@ const Login = () => {
             return;
         }
         dispatch(login(emailValue, passwordValue))
-        history.push('/')
     };
 
     const dispatch = useDispatch();
@@ -73,6 +72,7 @@ const Login = () => {
         </article>
     );
 };
+
 
 
 export default Login; 

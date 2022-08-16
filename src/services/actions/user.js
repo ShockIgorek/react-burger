@@ -7,7 +7,13 @@ import {
 import {
     sendEmail as send
 } from '../../utils/Api'
-import {resetPassword as reset}
+import {
+    resetPassword as reset
+}
+from '../../utils/Api'
+import {
+    getUserData as getUser
+}
 from '../../utils/Api'
 
 export const REGISTRATION = 'REGISTRATION';
@@ -38,8 +44,9 @@ export const LOGOUT_FAILED = 'LOGOUT_FAILED';
 export const setRegistrationLoading = () => ({
     type: REGISTRATION
 });
-export const setRegistrationLoadingSuccess = () => ({
-    type: REGISTRATION_SUCCESS
+export const setRegistrationLoadingSuccess = (token) => ({
+    type: REGISTRATION_SUCCESS,
+    payload: token
 });
 export const setRegistrationLoadingFailed = () => ({
     type: REGISTRATION_FAILED
@@ -130,10 +137,10 @@ export const login = (email, password) => {
     }
 }
 
-export const getUserData = () => {
+export const getUserData = (accessToken) => {
     return (dispatch) => {
         dispatch(setGetUserDataLoading())
-        login()
+        getUser()
             .then(res => {
                 console.log(res)
                 dispatch(setGetUserDataLoadingSuccess())
