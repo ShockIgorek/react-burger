@@ -16,6 +16,16 @@ import {
 }
 from '../../utils/Api'
 
+import {
+    sendUserData as sendUser
+}
+from '../../utils/Api'
+import {
+    refreshToken as refresh
+}
+from '../../utils/Api'
+
+
 export const REGISTRATION = 'REGISTRATION';
 export const REGISTRATION_SUCCESS = 'REGISTRATION_SUCCESS';
 export const REGISTRATION_FAILED = 'REGISTRATION_FAILED';
@@ -31,6 +41,15 @@ export const FORGOT_PASSWORD_FAILED = 'FORGOT_PASSWORD_FAILED';
 export const RESET_PASSWORD = 'RESET_PASSWORD';
 export const RESET_PASSWORD_SUCCESS = 'RESET_PASSWORD_SUCCESS';
 export const RESET_PASSWORD_FAILED = 'RESET_PASSWORD_FAILED';
+
+export const SEND_USER_DATA = 'SEND_USER_DATA';
+export const SEND_USER_DATA_SUCCESS = 'SEND_USER_DATA_SUCCESS';
+export const SEND_USER_DATA_FAILED = 'SEND_USER_DATA_FAILED';
+
+export const REFRESH_TOKEN = 'REFRESH_TOKEN';
+export const REFRESH_TOKEN_SUCCESS = 'REFRESH_TOKEN_SUCCESS';
+export const REFRESH_TOKEN_FAILED = 'REFRESH_TOKEN_FAILED';
+
 
 export const GET_USER_DATA = 'GET_USER_DATA';
 export const GET_USER_DATA_SUCCESS = 'GET_USER_DATA_SUCCESS';
@@ -85,11 +104,33 @@ export const setResetPasswordLoadingFailed = () => ({
 export const setGetUserDataLoading = () => ({
     type: GET_USER_DATA
 });
-export const setGetUserDataLoadingSuccess = () => ({
-    type: GET_USER_DATA_SUCCESS
+export const setGetUserDataLoadingSuccess = (userData) => ({
+    type: GET_USER_DATA_SUCCESS,
+    payload: userData
+});
+export const setSendUserDataLoading = () => ({
+    type: SEND_USER_DATA
+});
+export const setSendUserDataLoadingSuccess = (userData) => ({
+    type: SEND_USER_DATA_SUCCESS,
+    payload: userData
+});
+export const setSendUserDataLoadingFailed = () => ({
+    type: SEND_USER_DATA_FAILED
 });
 export const setGetUserDataLoadingFailed = () => ({
     type: GET_USER_DATA_FAILED
+});
+
+export const setRefreshTokenLoading = () => ({
+    type: REFRESH_TOKEN
+});
+export const setRefreshTokenLoadingSuccess = (token) => ({
+    type: REFRESH_TOKEN_SUCCESS,
+    payload: token
+});
+export const setRefreshTokenLoadingFailed = () => ({
+    type: REFRESH_TOKEN_FAILED
 });
 
 export const setLogoutLoading = () => ({
@@ -119,6 +160,21 @@ export const registration = (email, name, password) => {
     }
 }
 
+export const sendUserData = (accessToken, name, email, password) => {
+    return (dispatch) => {
+        dispatch(setSendUserDataLoading())
+
+        sendUser(accessToken, name, email, password)
+            .then((res) => {
+                dispatch(setSendUserDataLoadingSuccess(res.user))
+            })
+            .catch((err) => {
+                console.log(err)
+                dispatch(setSendUserDataLoadingFailed())
+            })
+    }
+}
+
 export const login = (email, password) => {
     return (dispatch) => {
         dispatch(setLoginLoading())
@@ -136,17 +192,30 @@ export const login = (email, password) => {
             })
     }
 }
+export const refreshToken = (refreshToken) => {
+    return (dispatch) => {
+        dispatch(setRefreshTokenLoading())
+        refresh(refreshToken)
+            .then((res) => {
+                localStorage.setItem('refreshToken', res.refreshToken)
+                dispatch(setRefreshTokenLoadingSuccess(res.accessToken))
+            })
+            .catch((err) => {
+                dispatch(setForgotPasswordLoadingFailed())
+                console.log(err)
+            })
+    }
+}
 
 export const getUserData = (accessToken) => {
     return (dispatch) => {
         dispatch(setGetUserDataLoading())
         getUser()
-            .then(res => {
-                console.log(res)
-                dispatch(setGetUserDataLoadingSuccess())
-                localStorage.setItem('refreshToken', res.refreshToken)
+            .then((res) => {
+                dispatch(setGetUserDataLoadingSuccess(res.user))
             })
             .catch((err) => {
+                dispatch(refreshToken(localStorage.getItem('refreshToken')))
                 dispatch(setGetUserDataLoadingFailed())
                 console.log(err)
             })
@@ -176,6 +245,21 @@ export const resetPassword = (password, code) => {
             })
             .catch((err) => {
                 setResetPasswordLoadingFailed();
+                console.log(err)
+            })
+    }
+}
+
+export const logout = (refreshToken) => {
+    return (dispatch) => {
+        dispatch(setLogoutLoading())
+        refresh(refreshToken)
+            .then(() => {
+                localStorage.removeItem('refreshToken')
+                dispatch(setLogoutLoadingSuccess())
+            })
+            .catch((err) => {
+                dispatch(setLoginLoadingFailed())
                 console.log(err)
             })
     }

@@ -9,6 +9,12 @@
     margin-right: 60px;
 }
 
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .list {
     list-style: none;
     padding: 0;

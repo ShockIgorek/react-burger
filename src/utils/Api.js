@@ -81,11 +81,50 @@ export function register(email, name, password) {
 
 export function getUserData(token) {
   return fetch(`${BASE_URL}/auth/user`, {
-    method: "POST",
+    method: "GET",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
-      'authorization': token,
+      "authorization": token
     },
     body: JSON.stringify({}),
+  }).then((res) => checkResult(res));
+}
+
+export function sendUserData(token, name, email, password) {
+  return fetch(`${BASE_URL}/auth/user`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+      "authorization": token
+    },
+    body: JSON.stringify({
+      "email": email,
+      "name": name,
+      "password": password
+    }),
+  }).then((res) => checkResult(res));
+}
+
+export function refreshToken(refreshToken) {
+  return fetch(`${BASE_URL}/auth/token`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      "token": refreshToken
+    }),
+  }).then((res) => checkResult(res));
+}
+
+export function logout(refreshToken) {
+  return fetch(`${BASE_URL}/auth/logout`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      "token": refreshToken
+    }),
   }).then((res) => checkResult(res));
 }
