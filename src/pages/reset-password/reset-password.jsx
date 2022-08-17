@@ -15,7 +15,6 @@ const ResetPassword = () => {
     const [passwordValue, setPasswordValue] = useState("");
     const inputRef = useRef(null);
     const dispatch = useDispatch();
-    const history = useHistory();
     
     const onPasswordChange = (e) => {
         setPasswordValue(e.target.value);

@@ -8,13 +8,13 @@
 .item:hover {
     cursor: grab;
     background-color: #4c4cff16;
-    box-shadow: 0 0 10px  #4c4cffbf;
+    box-shadow: 0 0 10px #4c4cffbf;
 }
 
 .moving {
     opacity: 1;
     cursor: grabbing;
-    box-shadow: 0 0 10px  #4c4cffbf;
+    box-shadow: 0 0 10px #4c4cffbf;
 }
 
 .price_info {
@@ -25,4 +25,9 @@
 
 .text {
     text-align: center;
+}
+
+.link {
+    text-decoration: none;
+    color: white;
 }

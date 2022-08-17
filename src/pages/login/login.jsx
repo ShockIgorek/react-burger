@@ -21,7 +21,6 @@ const Login = () => {
     };
 
     const dispatch = useDispatch();
-    const history = useHistory();
 
     const onPasswordChange = (evt) => {
         setPasswordValue(evt.target.value);

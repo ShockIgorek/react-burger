@@ -3,21 +3,22 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import style from './app.module.css';
 import AppHeader from '../app-header/app-header';
-import Main from '../main/main';
-import OrderDetails from '../order-details/order-details';
-import IngredientCalories from '../ingredient-calories/ingredient-calories';
-import Modal from '../modal/modal';
+// import Main from '../main/main';
+// import OrderDetails from '../order-details/order-details';
+// import IngredientCalories from '../ingredient-calories/ingredient-calories';
+// import Modal from '../modal/modal';
 import { getIngredients } from '../../services/actions/ingredients';
-import { changeOrderDetailsPopupState, changeIngredientsPopupState } from '../../services/actions/modal';
-import { deleteSelectedIngredient } from '../../services/actions/ingredients';
-import { deleteOrderData } from '../../services/actions/order';
+// import { changeOrderDetailsPopupState, changeIngredientsPopupState } from '../../services/actions/modal';
+// import { deleteSelectedIngredient } from '../../services/actions/ingredients';
+// import { deleteOrderData } from '../../services/actions/order';
+import ModalSwitch from '../modal-switch/modal-switch';
 
 
 
 const App = () => {
-  const orderData = useSelector(state => state.orderData.orderDetails);
-  const ingredientsPopup= useSelector(state => state.popupState.ingredientsPopup);
-  const orderDetailsPopup = useSelector(state => state.popupState.orderDetailsPopup);
+  // const orderData = useSelector(state => state.orderData.orderDetails);
+  // const ingredientsPopup= useSelector(state => state.popupState.ingredientsPopup);
+  // const orderDetailsPopup = useSelector(state => state.popupState.orderDetailsPopup);
   const ingredientsRequest = useSelector(state => state.ingredientsData.ingredientsRequest);
   const dispatch = useDispatch();
 
@@ -25,10 +26,10 @@ const App = () => {
     dispatch(getIngredients());
   }, [dispatch])
 
-  const handlePopupClose = () => {
-    orderDetailsPopup ? dispatch(changeOrderDetailsPopupState(false)) : dispatch(changeIngredientsPopupState(false));
-    orderDetailsPopup ? dispatch(deleteOrderData()) : dispatch(deleteSelectedIngredient())
-  }
+  // const handlePopupClose = () => {
+  //   orderDetailsPopup ? dispatch(changeOrderDetailsPopupState(false)) : dispatch(changeIngredientsPopupState(false));
+  //   orderDetailsPopup ? dispatch(deleteOrderData()) : dispatch(deleteSelectedIngredient())
+  // }
 
 
   return (
@@ -40,8 +41,9 @@ const App = () => {
         </h1>) :
           <>
             <AppHeader />
-            <Main />
-            {
+            {/* <Main /> */}
+            <ModalSwitch />
+            {/* {
               orderDetailsPopup && (
                 <Modal handlePopupClose={handlePopupClose}>
                   {orderData ? <OrderDetails /> : 
@@ -57,7 +59,7 @@ const App = () => {
                   <IngredientCalories />
                 </Modal>
               )
-            }
+            } */}
           </>
       }
     </div >

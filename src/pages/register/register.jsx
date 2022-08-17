@@ -12,8 +12,6 @@ const Register = () => {
     const [passwordValue, setPasswordValue] = useState("");
     const inputRef = useRef(null);
     const dispatch = useDispatch();
-    const history = useHistory();
-
 
     const onPasswordChange = (evt) => {
         setPasswordValue(evt.target.value);

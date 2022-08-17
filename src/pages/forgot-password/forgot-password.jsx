@@ -15,7 +15,6 @@ const ForgotPassword = () => {
     const [emailValue, setEmailValue] = useState("");
     const inputRef = useRef(null);
     const dispatch = useDispatch();
-    const history = useHistory();
 
     const handleSubmit = (evt) => {
         evt.preventDefault()

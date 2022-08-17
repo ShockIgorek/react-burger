@@ -6,13 +6,16 @@ import {
     Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag } from "react-dnd";
-import {selectIngredient} from "../../services/actions/ingredients";
+import { selectIngredient } from "../../services/actions/ingredients";
 import { changeIngredientsPopupState } from "../../services/actions/modal";
 // import PropTypes from "prop-types";
-import {ingredientTypes} from "../../utils/types"
+import { ingredientTypes } from "../../utils/types";
+import { Link, useLocation } from 'react-router-dom';
 
 const Ingredient = ({ ingredient }) => {
     const { image, price, name, _id } = ingredient;
+    const location = useLocation();
+
     const dispatch = useDispatch();
     const chosenIngredients = useSelector(
         (state) => state.ingredientsData.chosenIngredients
@@ -53,21 +56,31 @@ const Ingredient = ({ ingredient }) => {
             className={`${style.item} ${isDrag && style.moving}`}
             title="Переместите ингредиент в конструктор"
         >
-            <img
-                alt={name}
-                src={image}
-                className={`${style.image} ml-4 mr-4`}
-            />
-            <div className={`${style.price_info} mt-4 mb-4`}>
-                <span className="text text_type_digits-default mr-2">{price}</span>
-                <CurrencyIcon type="primary" />
-            </div>
-            <h3 className={`${style.text} text text_type_main-default`}>
-                {name}
-            </h3>
-            {counter > 0 && (
-                <Counter count={counter} size="default" />
-            )}
+            <Link className={style.link} to={{
+                pathname: `/ingredients/${_id}`,
+                state: { background: location },
+            }}>
+                <img
+                    alt={name}
+                    src={image}
+                    className={`${style.image} ml-4 mr-4`}
+                />
+                <div className={`${style.price_info} mt-4 mb-4`}>
+                    <span className="text text_type_digits-default mr-2">{price}</span>
+                    <CurrencyIcon type="primary" />
+                </div>
+                <h3 className={`${style.text} text text_type_main-default`}>
+                    {name}
+                </h3>
+                {counter > 0 && (
+                    <Counter count={counter} size="default" />
+                )}
+                <div className={`${style.hint_icons}`}>
+                    <span className={`${style.left_click_icon}`}></span>
+                    <span className={`${style.right_click_icon}`}></span>
+                    <span className={`${style.drag_icon}`}></span>
+                </div>
+            </Link>
         </li>
     );
 };

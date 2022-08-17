@@ -182,7 +182,7 @@ export const login = (email, password) => {
         log(email, password)
             .then(res => {
                 console.log(res)
-                dispatch(setLoginLoadingSuccess(res.accessToken))
+                dispatch(setLoginLoadingSuccess(res))
                 localStorage.setItem('refreshToken', res.refreshToken)
                 // history.push('/')
             })

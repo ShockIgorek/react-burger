@@ -5,7 +5,7 @@ import {
     Input, Button
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserData, sendUserData, logout } from "../../services/actions/user";
+import { sendUserData, logout } from "../../services/actions/user";
 
 const Profile = () => {
     const [nameValue, setNameValue] = useState("");
@@ -36,15 +36,11 @@ const Profile = () => {
         setPasswordValue('')
     }
     useEffect(() => {
-        if (!userData) {
-            dispatch(getUserData(accessToken));
-        }
-
         if (userData) {
             setLoginValue(userData.email);
             setNameValue(userData.name);
         }
-    }, [accessToken, dispatch, userData]);
+    }, [userData]);
 
     const handleLogout = () => {
         const refreshToken = localStorage.getItem('refreshToken');
@@ -105,7 +101,7 @@ const Profile = () => {
                     size={"default"}
                 />
                 <Input
-                    type={"text"}
+                    type={"email"}
                     placeholder={"Логин"}
                     onChange={(evt) => setLoginValue(evt.target.value)}
                     icon={"EditIcon"}
@@ -118,7 +114,7 @@ const Profile = () => {
                     size={"default"}
                 />
                 <Input
-                    type={"text"}
+                    type={"password"}
                     placeholder={"Пароль"}
                     onChange={(evt) => setPasswordValue(evt.target.value)}
                     icon={"EditIcon"}

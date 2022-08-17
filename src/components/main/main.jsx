@@ -9,11 +9,11 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { addIngredient } from '../../services/actions/ingredients';
 
 
-import Login from '../../pages/login/login'
-import Register from '../../pages/register/register';
-import ForgotPassword from '../../pages/forgot-password/forgot-password';
-import ResetPassword from '../../pages/reset-password/reset-password';
-import Profile from '../../pages/profile/profile';
+// import Login from '../../pages/login/login'
+// import Register from '../../pages/register/register';
+// import ForgotPassword from '../../pages/forgot-password/forgot-password';
+// import ResetPassword from '../../pages/reset-password/reset-password';
+// import Profile from '../../pages/profile/profile';
 
 
 
@@ -39,7 +39,11 @@ const Main = () => {
   return (
     <main>
       <DndProvider backend={HTML5Backend}>
-        <Switch>
+      <section className={style.main_container}>
+          <BurgerIngredients />
+          <BurgerConstructor onDropHandler={handleDrop} />
+        </section>
+        {/* <Switch>
           <Route exact path="/">
             <section className={style.main_container}>
               <BurgerIngredients />
@@ -58,10 +62,13 @@ const Main = () => {
           <Route path="/reset-password">
             <ResetPassword />
           </Route>
-          <Route path="/profile">
+          <ProtectedRoute path="/profile">
             <Profile />
-          </Route>
-        </Switch>
+          </ProtectedRoute>
+                    <ProtectedRoute path="/profile/orders">
+            <Profile />
+          </ProtectedRoute>
+        </Switch> */}
       </DndProvider>
     </main>
   );
